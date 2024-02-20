@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Beer Collection App Documentation
 
-## Getting Started
+## Introduction
+This is the Beer Collection App. It's built with NextJS ❤️, server-side rendering first . You can add beers to your collection. You can also give beers a rating and write comments.
 
-First, run the development server:
+## Data Source
+The information about the beers is stored in a `db.json` file in the main folder of the project. I have used api routes to make this data available to the app. I have created db.json from `https://api.punkapi.com/v2/beers` endpoint deleted lots of info there and added a comments and a ratings array also to be able to get and add comments and ratings.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Loading States
+I have used `react-loading-skeleton` to show a loading state as a placeholder until the data is ready also simulated the API call to be slower to see the loading state.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Forms
+The forms in the app using `react-hook-form` and `zod`. It's awesome for managing the form data and validation.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Components
+I have created the components following atomic design principles which is great for reusability and maintainability also used tailwind for styling. All components were created by me with love. ☺️
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Documents for usage
+I used the following documents during coding:
 
-## Learn More
+- [Next.js Docs](https://nextjs.org/docs)
+- [Tailwind CSS Docs](https://tailwindcss.com/docs/)
+- [React Hook Form](https://react-hook-form.com/get-started)
+- [Zod](https://zod.dev/)
+- [react-loading-skeleton on npm](https://www.npmjs.com/package/react-loading-skeleton)
 
-To learn more about Next.js, take a look at the following resources:
+## App Structure
+- `.env.local`
+- `db.json`
+- `public`
+    - `default_beer.png`
+    - `favicon.ico`
+    - `impact-logo.png`
+    - `icon512_maskable.png`
+    - `icon512_rounded.png`
+    - `manifest.json`
+- `src`
+    - `app`
+        - `_error.tsx`
+        - `actions`
+            - `getBeerDetail.ts`
+            - `getBeers.ts`
+        - `add-beer`
+            - `page.tsx`
+        - `api`
+            - `beers`
+                - `[[id]]`
+                    - `route.ts`
+                - `add`
+                    - `route.ts`
+                - `route.ts`
+            - `comments`
+                - `[[id]]`
+                    - `route.ts`
+            - `rating`
+                - `[[id]]`
+                    - `route.ts`
+        - `beer`
+            - `[[id]]`
+                - `page.tsx`
+        - `favicon.ico`
+        - `globals.css`
+        - `layout.tsx`
+        - `page.tsx`
+    - `components`
+        - `atoms`
+            - `Button.tsx`
+            - `ErrorMessage.tsx`
+            - `ImageWithLoader.tsx`
+            - `Input.tsx`
+            - `Label.tsx`
+            - `Logo.tsx`
+            - `Rating.tsx`
+            - `RatingWrapper.tsx`
+            - `Select.tsx`
+            - `Spinner.tsx`
+            - `Text.tsx`
+            - `Textarea.tsx`
+            - `index.tsx`
+        - `molecules`
+            - `BeerCard.tsx`
+            - `BeerCardSkeleton.tsx`
+            - `Comment.tsx`
+            - `MenuItem.tsx`
+            - `Properties.tsx`
+            - `Search.tsx`
+            - `SortFilter.tsx`
+            - `index.tsx`
+        - `organisms`
+            - `BeerDetail.tsx`
+            - `BeerForm.tsx`
+            - `BeerList.tsx`
+            - `BeerListLoading.tsx`
+            - `BottomBar.tsx`
+            - `CommentForm.tsx`
+            - `CommentsWrapper.tsx`
+            - `Filters.tsx`
+            - `LeftSideBar.tsx`
+            - `TopBar.tsx`
+            - `index.tsx`
+        - `templates`
+            - `HomePageTemplate.tsx`
+    - `interfaces`
+        - `index.ts`
+    - `lib`
+        - `constants`
+            - `index.ts`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Installation
+To install and run the Beer Collection App, follow these steps:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/veysiyildiz/beer-collection.git
+    ```
 
-## Deploy on Vercel
+2. Install the dependencies:
+    ```bash
+    cd beer-collection
+    yarn
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Start the application.
+    ```bash
+    yarn dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Usage
+Once the application is running, you can access it in your web browser at `http://localhost:3000`.
