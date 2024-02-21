@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ErrorMessage } from "@/components/atoms";
 import { BeerDetail, CommentsWrapper } from "@/components/organisms";
 import {
@@ -5,56 +6,65 @@ import {
   getAllBeers,
   getCommentsByBeerId,
 } from "@/app/actions/getBeerDetail";
+import { Beer } from "@/interfaces";
 
-export default async function DetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const [{ data: beer, status }, comments] = await Promise.all([
-    getBeerById(params.id),
-    getCommentsByBeerId(params.id),
-  ]);
+interface Params {
+  params: {
+    id: string;
+  };
+}
 
-  if (status === "failed") {
-    return <ErrorMessage message={error} className="text-xl" />;
-  } else {
-    return (
-      <>
-        <div className="grid gap-4">
-          <BeerDetail
-            status={status}
-            beer={beer}
-            averageRating={beer.averageRating}
-          />
-          <CommentsWrapper
-            status={status}
-            comments={comments}
-            beerId={beer.id}
-          />
-        </div>
-      </>
-    );
+export default async function DetailPage({ params }: Params) {
+  try {
+    const [{ data: beer, status }, comments] = await Promise.all([
+      getBeerById(params.id),
+      getCommentsByBeerId(params.id),
+    ]);
+
+    if (status === "failed") {
+      throw new Error("Failed to fetch beer data");
+    } else {
+      return (
+        beer && (
+          <div className="grid gap-4">
+            <BeerDetail
+              status={status}
+              beer={beer}
+              averageRating={beer.averageRating}
+            />
+            <CommentsWrapper
+              status={status}
+              comments={comments.data || []}
+              beerId={beer.id}
+            />
+          </div>
+        )
+      );
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      return <ErrorMessage message={error.message} className="text-xl" />;
+    }
   }
 }
 
-export async function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { data: beer } = await getBeerById(params.id);
 
-  if (!beer) {
-    return notFound();
-  }
-
   return {
-    title: beer.name,
-    description: beer.tagline,
+    title: beer?.name,
+    description: beer?.tagline,
   };
 }
 
 export async function generateStaticParams() {
-  const beers = await getAllBeers();
+  const beersData: { data: Beer[] } = await getAllBeers();
 
-  return beers.map((beer) => ({
-    id: beer.id,
-  }));
+  if (beersData.data) {
+    return beersData.data.map((beer) => ({
+      id: beer.id,
+    }));
+  } else {
+    return [];
+  }
 }

@@ -19,10 +19,18 @@ export async function GET(
 
     const { params } = context;
 
-    return NextResponse.json(
-      beers.find((beer: Beer) => beer.id === params.id.toString())
-    );
+    const beer = beers.find((beer: Beer) => beer.id === params.id.toString());
+
+    if (!beer) {
+      return new NextResponse(null, { status: 404 });
+    }
+
+    return NextResponse.json(beer);
   } catch (error) {
-    return NextResponse.error({ status: 500, message: error.message });
+    if (error instanceof Error) {
+      return new NextResponse(error.message, { status: 500 });
+    } else {
+      return new NextResponse("An unknown error occurred", { status: 500 });
+    }
   }
 }

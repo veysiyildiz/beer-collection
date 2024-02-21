@@ -7,6 +7,7 @@ import { TopBar, LeftSideBar, BottomBar } from "@/components/organisms";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   title: "Beer Collection",
   description: "Beer Collection Home",
 };

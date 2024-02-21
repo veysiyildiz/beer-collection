@@ -66,7 +66,6 @@ I used the following documents during coding:
         - `atoms`
             - `Button.tsx`
             - `ErrorMessage.tsx`
-            - `ImageWithLoader.tsx`
             - `Input.tsx`
             - `Label.tsx`
             - `Logo.tsx`

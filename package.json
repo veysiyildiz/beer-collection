@@ -2,6 +2,14 @@
   "name": "beer-collection",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Veysi YILDIZ",
+    "email": "veysiyildiz@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/veysiyildiz/beer-collection.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -20,6 +28,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.202",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

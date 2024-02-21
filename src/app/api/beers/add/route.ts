@@ -28,6 +28,10 @@ export async function POST(
 
     return NextResponse.json(newBeer);
   } catch (error) {
-    return NextResponse.error({ status: 500, message: error.message });
+    if (error instanceof Error) {
+      return new NextResponse(error.message, { status: 500 });
+    } else {
+      return new NextResponse("An unknown error occurred", { status: 500 });
+    }
   }
 }

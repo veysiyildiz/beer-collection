@@ -7,7 +7,7 @@ import { Star } from "lucide-react";
 interface RatingProps {
   rating: number;
   className?: string;
-  beerId?: string;
+  beerId: string;
   clickable?: boolean;
   children?: React.ReactNode;
 }
@@ -27,7 +27,8 @@ const Rating: React.FC<RatingProps> = ({
     if (clickable) {
       const rating = value;
       ("use server");
-      const { beer } = await rateTheBeer(beerId, rating);
+      const { data } = await rateTheBeer(beerId, rating);
+      const beer = data.beer;
       setRatingValue(beer.averageRating);
     }
   };

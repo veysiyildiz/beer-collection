@@ -9,7 +9,6 @@ import Select from "./Select";
 import Spinner from "./Spinner";
 import Rating from "./Rating";
 import RatingWrapper from "./RatingWrapper";
-import ImageWithLoader from "./ImageWithLoader";
 
 export {
   Button,
@@ -23,5 +22,4 @@ export {
   Spinner,
   Rating,
   RatingWrapper,
-  ImageWithLoader,
 };

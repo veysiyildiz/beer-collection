@@ -12,7 +12,7 @@ const RatingWrapper: React.FC<RatingWrapperProps> = ({
 }) => {
   return (
     <div>
-      <Rating rating={rating} />
+      <Rating rating={rating} beerId="wrapper" />
       {children}
     </div>
   );

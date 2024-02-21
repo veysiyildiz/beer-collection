@@ -5,8 +5,15 @@ import { BeerList, BeerListLoading, Filters } from "@/components/organisms";
 import { Button } from "@/components/atoms";
 import { getBeers } from "@/app/actions/getBeers";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, sortOptions } from "@/lib/constants";
+import { Beer } from "@/interfaces";
 
-export default function HomePageTemplate(props) {
+interface Props {
+  beers: Beer[];
+  total: number;
+  status: string;
+}
+
+export default function HomePageTemplate(props: Props) {
   const [beers, setBeers] = useState(props.beers);
   const [total, setTotal] = useState(props.total);
   const [status, setStatus] = useState(props.status);
@@ -45,11 +52,11 @@ export default function HomePageTemplate(props) {
     })();
   }, [searchTerm, sortOption]);
 
-  const handleSearchChange = (search) => {
+  const handleSearchChange = (search: string) => {
     setSearchTerm(search);
   };
 
-  const handleSortChange = (sort) => {
+  const handleSortChange = (sort: string) => {
     setSortOption(sort);
   };
 
@@ -84,7 +91,8 @@ export default function HomePageTemplate(props) {
         onSearchChange={handleSearchChange}
         onSortChange={handleSortChange}
       />
-      <BeerList beers={beers} status={status} />
+      <BeerList beers={beers} />
+      {status === "loading" && <BeerListLoading />}
       {!isLoadingMore && page < totalPages && (
         <div className="w-full mt-4 text-center">
           <Button variant="primary" onClick={handleLoadMore}>

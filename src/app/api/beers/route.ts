@@ -30,9 +30,15 @@ export async function GET(
     if (sortOption) {
       beers.sort((a, b) => {
         if (order === "desc") {
-          return b[sortOption] > a[sortOption] ? 1 : -1;
+          return (b[sortOption as keyof Beer] as any) >
+            (a[sortOption as keyof Beer] as any)
+            ? 1
+            : -1;
         } else {
-          return a[sortOption] > b[sortOption] ? 1 : -1;
+          return (a[sortOption as keyof Beer] as any) >
+            (b[sortOption as keyof Beer] as any)
+            ? 1
+            : -1;
         }
       });
     }
@@ -50,6 +56,10 @@ export async function GET(
 
     return NextResponse.json({ total, beers: paginatedBeers });
   } catch (error) {
-    return NextResponse.error({ status: 500, message: error.message });
+    if (error instanceof Error) {
+      return new NextResponse(error.message, { status: 500 });
+    } else {
+      return new NextResponse("An unknown error occurred", { status: 500 });
+    }
   }
 }

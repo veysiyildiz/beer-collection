@@ -38,7 +38,7 @@ export async function POST(
         (rating: Rating) => rating.beerId === newRating.beerId
       );
       const totalRating = relatedRatings.reduce(
-        (total: number, rating: Rating) => total + rating.rating,
+        (total: number, rating: Rating) => total + Number(rating.rating),
         0
       );
       beer.averageRating = totalRating / relatedRatings.length;
@@ -48,11 +48,19 @@ export async function POST(
     fs.writeFileSync(dbPath, JSON.stringify(dbObject, null, 2));
 
     if (updatedBeer) {
-      return NextResponse.json({ rating: newRating, beer: updatedBeer });
+      return NextResponse.json({
+        beerId: updatedBeer.id,
+        rating: newRating.rating,
+        beer: updatedBeer,
+      });
     } else {
       throw new Error("Beer not found");
     }
   } catch (error) {
-    return NextResponse.error({ status: 500, message: error.message });
+    if (error instanceof Error) {
+      return new NextResponse(error.message, { status: 500 });
+    } else {
+      return new NextResponse("An unknown error occurred", { status: 500 });
+    }
   }
 }

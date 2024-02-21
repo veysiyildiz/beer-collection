@@ -1,14 +1,12 @@
+"use client";
+
 import React from "react";
 import { rateTheBeer } from "@/app/actions/getBeerDetail";
 import Skeleton from "react-loading-skeleton";
-import {
-  Text,
-  Rating,
-  RatingWrapper,
-  ImageWithLoader,
-} from "@/components/atoms";
+import { Text, Rating, RatingWrapper } from "@/components/atoms";
 import { Properties } from "@/components/molecules";
 import { Beer, Comment } from "@/interfaces";
+import Image from "next/image";
 
 interface BeerDetailProps {
   beer: Beer;
@@ -54,12 +52,16 @@ const BeerDetail: React.FC<BeerDetailProps> = ({
   return (
     <div className="grid sm:grid-cols-2 grid-cols-1 gap-4">
       <div className="flex flex-col items-center">
-        <ImageWithLoader
-          className="object-scale-down h-96 sm:h-[500px] m-auto"
+        <Image
           src={beer?.image_url}
           alt={beer?.name}
           width={300}
           height={450}
+          data-loaded="false"
+          onLoad={(event) => {
+            event.currentTarget.setAttribute("data-loaded", "true");
+          }}
+          className="object-scale-down w-auto h-96 sm:h-[500px] m-auto data-[loaded=false]:bg-gray-100/10"
         />
         <Rating
           className="mt-4"

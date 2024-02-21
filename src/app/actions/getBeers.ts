@@ -13,12 +13,9 @@ export async function getBeers({
   searchTerm: string;
   sortOption: string;
   order: string;
-}): Promise<{
-  status: Status;
-  data: Beer[] | null;
-}> {
-  let status: Status = "loading";
-  let data: Beer[] | null = null;
+}) {
+  let status = "loading";
+  let data = null;
   try {
     const res = await fetch(
       `${API_URL}/api/beers?page=${page}&limit=${limit}&searchTerm=${searchTerm}&sortOption=${sortOption}&_order=${order}`
@@ -30,17 +27,18 @@ export async function getBeers({
     status = "success";
   } catch (error) {
     status = "failed";
-    throw new Error(error.message);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred");
+    }
   }
   return { status, data };
 }
 
-export async function addBeer(beer: Beer): Promise<{
-  status: Status;
-  data: Beer | null;
-}> {
-  let status: Status = "loading";
-  let data: Beer | null = null;
+export async function addBeer(beer: Beer) {
+  let status = "loading";
+  let data = null;
   try {
     const res = await fetch(`${API_URL}/api/beers/add`, {
       method: "POST",
@@ -56,7 +54,12 @@ export async function addBeer(beer: Beer): Promise<{
     status = "success";
   } catch (error) {
     status = "failed";
-    throw new Error(error.message);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred");
+    }
   }
+
   return { status, data };
 }

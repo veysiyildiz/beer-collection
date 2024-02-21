@@ -1,10 +1,21 @@
 import { API_URL } from "@/lib/constants";
 import { Beer, Comment, Status } from "@/interfaces";
 
-export async function getAllBeers(): Promise<{
-  data: Beer[] | null;
-}> {
-  let data: Beer[] | null = null;
+interface Data {
+  beers: Beer[];
+}
+
+interface Result<T> {
+  status: Status;
+  data: T | null;
+}
+
+interface ApiResponse<T> {
+  data: T | null;
+}
+
+export async function getAllBeers() {
+  let data = null;
   try {
     const res = await fetch(
       `${API_URL}/api/beers?page=0&limit=0&searchTerm=&sortOption=&_order=desc`
@@ -14,16 +25,21 @@ export async function getAllBeers(): Promise<{
     }
     data = await res.json();
   } catch (error) {
-    throw new Error(error.message);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred");
+    }
   }
-  return data.beers;
+  if (data === null) {
+    throw new Error("Data is null");
+  }
+  return { data: data.beers };
 }
 
-export async function getBeerById(id: string): Promise<{
-  data: Beer | null;
-}> {
-  let data: Beer | null = null;
-  let status: Status = "loading";
+export async function getBeerById(id: string) {
+  let data = null;
+  let status = "loading";
 
   try {
     const res = await fetch(`${API_URL}/api/beers/${id}`);
@@ -34,15 +50,17 @@ export async function getBeerById(id: string): Promise<{
     status = "success";
   } catch (error) {
     status = "failed";
-    throw new Error(error.message);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred");
+    }
   }
   return { status, data };
 }
 
-export async function getCommentsByBeerId(id: string): Promise<{
-  data: Comment[] | null;
-}> {
-  let data: Comment[] | null = null;
+export async function getCommentsByBeerId(id: string) {
+  let data = null;
 
   try {
     const res = await fetch(`${API_URL}/api/comments/${id}`);
@@ -51,18 +69,17 @@ export async function getCommentsByBeerId(id: string): Promise<{
     }
     data = await res.json();
   } catch (error) {
-    throw new Error(error.message);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred");
+    }
   }
-  return data;
+  return { data };
 }
 
-export async function rateTheBeer(
-  id: string,
-  rating: number
-): Promise<{
-  data: Beer | null;
-}> {
-  let data: Beer | null = null;
+export async function rateTheBeer(id: string, rating: number) {
+  let data = null;
 
   try {
     const res = await fetch(`${API_URL}/api/rating/${id}`, {
@@ -77,18 +94,18 @@ export async function rateTheBeer(
     }
     data = await res.json();
   } catch (error) {
-    throw new Error(error.message);
+    status = "failed";
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred");
+    }
   }
-  return data;
+  return { data };
 }
 
-export async function addComment(
-  beerId: string,
-  text: string
-): Promise<{
-  data: Comment | null;
-}> {
-  let data: Comment | null = null;
+export async function addComment(beerId: string, text: string) {
+  let data = null;
 
   try {
     const res = await fetch(`${API_URL}/api/comments/${beerId}`, {
@@ -105,7 +122,12 @@ export async function addComment(
 
     data = await res.json();
   } catch (error) {
-    throw new Error(error.message);
+    status = "failed";
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred");
+    }
   }
-  return data;
+  return { data };
 }
