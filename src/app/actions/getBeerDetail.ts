@@ -1,29 +1,23 @@
 import { API_URL } from "@/lib/constants";
 import { Beer, Comment, Status } from "@/interfaces";
-
-interface Data {
-  beers: Beer[];
-}
-
-interface Result<T> {
-  status: Status;
-  data: T | null;
-}
-
-interface ApiResponse<T> {
-  data: T | null;
-}
+import DB from "../../db.json";
+import fs from "fs";
+import path from "path";
 
 export async function getAllBeers() {
   let data = null;
   try {
-    const res = await fetch(
-      `${API_URL}/api/beers?page=0&limit=0&searchTerm=&sortOption=&_order=desc`
-    );
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
+    if (process.env.NODE_ENV === "development") {
+      const res = await fetch(
+        `${API_URL}/api/beers?page=0&limit=0&searchTerm=&sortOption=&_order=desc`
+      );
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      data = await res.json();
+    } else {
+      data = DB.beers;
     }
-    data = await res.json();
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
@@ -34,7 +28,7 @@ export async function getAllBeers() {
   if (data === null) {
     throw new Error("Data is null");
   }
-  return { data: data.beers };
+  return { data };
 }
 
 export async function getBeerById(id: string) {
@@ -42,11 +36,15 @@ export async function getBeerById(id: string) {
   let status = "loading";
 
   try {
-    const res = await fetch(`${API_URL}/api/beers/${id}`);
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
+    if (process.env.NODE_ENV === "development") {
+      const res = await fetch(`${API_URL}/api/beers/${id}`);
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      data = await res.json();
+    } else {
+      data = DB.beers.find((beer: Beer) => beer.id === id);
     }
-    data = await res.json();
     status = "success";
   } catch (error) {
     status = "failed";
@@ -63,11 +61,15 @@ export async function getCommentsByBeerId(id: string) {
   let data = null;
 
   try {
-    const res = await fetch(`${API_URL}/api/comments/${id}`);
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
+    if (process.env.NODE_ENV === "development") {
+      const res = await fetch(`${API_URL}/api/comments/${id}`);
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      data = await res.json();
+    } else {
+      data = DB.comments.filter((comment: Comment) => comment.beerId === id);
     }
-    data = await res.json();
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
@@ -82,19 +84,30 @@ export async function rateTheBeer(id: string, rating: number) {
   let data = null;
 
   try {
-    const res = await fetch(`${API_URL}/api/rating/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ rating }),
-    });
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
+    if (process.env.NODE_ENV === "development") {
+      const res = await fetch(`${API_URL}/api/rating/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ rating }),
+      });
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      data = await res.json();
+    } else {
+      const beer = DB.beers.find((beer: Beer) => beer.id === id);
+      if (beer) {
+        beer.rating = rating;
+        fs.writeFileSync(
+          path.resolve(__dirname, "../../db.json"),
+          JSON.stringify(DB)
+        );
+        data = beer;
+      }
     }
-    data = await res.json();
   } catch (error) {
-    status = "failed";
     if (error instanceof Error) {
       throw new Error(error.message);
     } else {
@@ -108,21 +121,30 @@ export async function addComment(beerId: string, text: string) {
   let data = null;
 
   try {
-    const res = await fetch(`${API_URL}/api/comments/${beerId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-    });
+    if (process.env.NODE_ENV === "development") {
+      const res = await fetch(`${API_URL}/api/comments/${beerId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text }),
+      });
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      data = await res.json();
+    } else {
+      const comment = { beerId, text };
+      DB.comments.push(comment);
+      fs.writeFileSync(
+        path.resolve(__dirname, "../../db.json"),
+        JSON.stringify(DB)
+      );
+      data = comment;
     }
-
-    data = await res.json();
   } catch (error) {
-    status = "failed";
     if (error instanceof Error) {
       throw new Error(error.message);
     } else {
