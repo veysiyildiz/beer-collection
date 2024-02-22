@@ -8,7 +8,6 @@ import Logo from "./Logo";
 import Select from "./Select";
 import Spinner from "./Spinner";
 import Rating from "./Rating";
-import RatingWrapper from "./RatingWrapper";
 
 export {
   Button,
@@ -21,5 +20,4 @@ export {
   Select,
   Spinner,
   Rating,
-  RatingWrapper,
 };

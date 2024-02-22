@@ -3,7 +3,7 @@
 import React from "react";
 import { rateTheBeer } from "@/app/actions/getBeerDetail";
 import Skeleton from "react-loading-skeleton";
-import { Text, Rating, RatingWrapper } from "@/components/atoms";
+import { Text, Rating } from "@/components/atoms";
 import { Properties } from "@/components/molecules";
 import { Beer, Comment } from "@/interfaces";
 import Image from "next/image";
@@ -26,15 +26,8 @@ const BeerDetail: React.FC<BeerDetailProps> = ({
       <div className="grid sm:grid-cols-2 grid-cols-1 gap-4">
         <div className="flex flex-col items-center">
           <div className="object-scale-down h-96 sm:h-[500px] mb-2 w-full">
-            <Skeleton height={450} />
+            <Skeleton containerClassName="flex-1" height={450} />
           </div>
-          <Skeleton
-            wrapper={RatingWrapper}
-            height="100%"
-            baseColor="#ebab34"
-            highlightColor="#f2cb07"
-            duration={0.9}
-          />
         </div>
         <div className="flex flex-col">
           <Text variant="h1" className="sm:text-left text-center mt-4">
@@ -57,11 +50,7 @@ const BeerDetail: React.FC<BeerDetailProps> = ({
           alt={beer?.name}
           width={300}
           height={450}
-          data-loaded="false"
-          onLoad={(event) => {
-            event.currentTarget.setAttribute("data-loaded", "true");
-          }}
-          className="object-scale-down w-auto h-96 sm:h-[500px] m-auto data-[loaded=false]:bg-gray-100/10"
+          className="object-scale-down w-auto h-96 sm:h-[500px] m-auto"
         />
         <Rating
           className="mt-4"

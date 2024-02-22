@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { BeerList, BeerListLoading, Filters } from "@/components/organisms";
 import { Button } from "@/components/atoms";
 import { getBeers } from "@/app/actions/getBeers";
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, sortOptions } from "@/lib/constants";
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "@/lib/constants";
 import { Beer } from "@/interfaces";
+import { delay } from "lodash";
 
 interface Props {
   beers: Beer[];
@@ -14,14 +16,16 @@ interface Props {
 }
 
 export default function HomePageTemplate(props: Props) {
+  const searchParams = useSearchParams();
   const [beers, setBeers] = useState(props.beers);
   const [total, setTotal] = useState(props.total);
   const [status, setStatus] = useState(props.status);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortOption, setSortOption] = useState("");
   const [page, setPage] = useState(DEFAULT_PAGE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
+  const searchTerm = searchParams.get("searchTerm") || "";
+  const sortOption = searchParams.get("sortOption") || "";
+  const order = searchParams.get("order") || "desc";
 
   useEffect(() => {
     setBeers(props.beers);
@@ -30,35 +34,12 @@ export default function HomePageTemplate(props: Props) {
   }, [props.beers, props.total, props.status]);
 
   useEffect(() => {
-    setTotalPages(Math.ceil(total / DEFAULT_PAGE_SIZE));
-  }, [total]);
+    setPage(DEFAULT_PAGE);
+  }, [searchTerm, sortOption, order]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await getBeers({
-          page: DEFAULT_PAGE,
-          limit: DEFAULT_PAGE_SIZE,
-          searchTerm,
-          sortOption,
-          order: "desc",
-        });
-        setBeers(response.data.beers);
-        setTotal(response.data.total);
-        setStatus(response.status);
-      } catch (err) {
-        setStatus("failed");
-      }
-    })();
-  }, [searchTerm, sortOption]);
-
-  const handleSearchChange = (search: string) => {
-    setSearchTerm(search);
-  };
-
-  const handleSortChange = (sort: string) => {
-    setSortOption(sort);
-  };
+    setTotalPages(Math.ceil(total / DEFAULT_PAGE_SIZE));
+  }, [total]);
 
   const handleLoadMore = async () => {
     setIsLoadingMore(true);
@@ -71,7 +52,7 @@ export default function HomePageTemplate(props: Props) {
         limit: DEFAULT_PAGE_SIZE,
         searchTerm,
         sortOption,
-        order: "desc",
+        order,
       });
       setBeers([...beers, ...response.data.beers]);
       setPage(nextPage);
@@ -85,15 +66,10 @@ export default function HomePageTemplate(props: Props) {
 
   return (
     <>
-      <Filters
-        sortOptions={sortOptions}
-        selectedSortOption={sortOption}
-        onSearchChange={handleSearchChange}
-        onSortChange={handleSortChange}
-      />
+      <Filters />
       <BeerList beers={beers} />
-      {status === "loading" && <BeerListLoading />}
-      {!isLoadingMore && page < totalPages && (
+      {isLoadingMore && <BeerListLoading />}
+      {!isLoadingMore && page < totalPages && beers.length < total && (
         <div className="w-full mt-4 text-center">
           <Button variant="primary" onClick={handleLoadMore}>
             Load More

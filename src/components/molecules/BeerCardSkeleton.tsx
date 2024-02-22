@@ -1,6 +1,6 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
-import { Text, RatingWrapper } from "@/components/atoms";
+import { Text } from "@/components/atoms";
 
 const BeerCardSkeleton = () => {
   return (
@@ -15,15 +15,6 @@ const BeerCardSkeleton = () => {
       <Text variant="p" className="mt-2 text-sm text-center text-gray-600">
         <Skeleton count={2} />
       </Text>
-      <div className="mt-4 flex justify-center">
-        <Skeleton
-          wrapper={RatingWrapper}
-          height="0"
-          baseColor="#ebab34"
-          highlightColor="#f2cb07"
-          duration={0.9}
-        />
-      </div>
     </div>
   );
 };

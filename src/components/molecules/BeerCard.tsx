@@ -20,7 +20,6 @@ const BeerCard: React.FC<BeerCardProps> = React.memo(
               alt={beer.name || "Beer"}
               width={120}
               height={200}
-              priority
               className="rounded-md w-auto h-48 object-scale-down data-[loaded=false]:bg-gray-100/10"
             />
             <Text

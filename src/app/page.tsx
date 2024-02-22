@@ -1,22 +1,37 @@
 import React, { Suspense } from "react";
+import { redirect } from "next/navigation";
 import { ErrorMessage } from "@/components/atoms";
 import { getBeers } from "@/app/actions/getBeers";
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "@/lib/constants";
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, sortOptions } from "@/lib/constants";
 import HomePageTemplate from "@/components/templates/HomePageTemplate";
 
-export default async function HomePage() {
+type HomePageProps = {
+  searchParams: {
+    searchTerm?: string;
+    sortOption?: string;
+    order?: string;
+  };
+};
+
+export default async function HomePage({ searchParams }: HomePageProps) {
   let status = "loading";
   let beers = [];
   let total = 0;
   let error = null;
 
+  const page = DEFAULT_PAGE;
+  const limit = DEFAULT_PAGE_SIZE;
+  const searchTerm = searchParams.searchTerm || "";
+  const sortOption = searchParams.sortOption || "";
+  const order = searchParams.order || "desc";
+
   try {
     const response = await getBeers({
-      page: DEFAULT_PAGE,
-      limit: DEFAULT_PAGE_SIZE,
-      searchTerm: "",
-      sortOption: "",
-      order: "desc",
+      page,
+      limit,
+      searchTerm,
+      sortOption,
+      order,
     });
     beers = response?.data?.beers;
     total = response?.data?.total;
@@ -38,6 +53,10 @@ export default async function HomePage() {
       />
     );
   } else {
-    return <HomePageTemplate beers={beers} status={status} total={total} />;
+    return (
+      <>
+        <HomePageTemplate beers={beers} status={status} total={total} />
+      </>
+    );
   }
 }

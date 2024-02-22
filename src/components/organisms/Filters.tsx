@@ -1,27 +1,14 @@
 import React from "react";
-import { Search, SortFilter } from "@/components/molecules";
+import { Search } from "@/components/molecules";
+import { Select } from "@/components/atoms";
 
-interface FiltersProps {
-  sortOptions: { value: string; text: string }[];
-  selectedSortOption?: string;
-  onSearchChange: (searchTerm: string) => void;
-  onSortChange: (sortOption: string) => void;
-}
-
-const Filters: React.FC<FiltersProps> = ({
-  sortOptions,
-  selectedSortOption,
-  onSearchChange,
-  onSortChange,
-}) => {
+const Filters: React.FC = () => {
   return (
     <div className="sm:flex justify-between mb-4">
-      <Search onSearchChange={onSearchChange} />
-      <SortFilter
-        options={sortOptions}
-        selectedSortOption={selectedSortOption}
-        onSortChange={onSortChange}
-      />
+      <Search />
+      <div className="flex items-center">
+        <Select />
+      </div>
     </div>
   );
 };
