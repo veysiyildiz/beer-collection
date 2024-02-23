@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { addComment } from "@/app/actions/getBeerDetail";
 import { Comments } from "@/components/molecules";
 import { CommentForm } from "@/components/organisms";
@@ -23,8 +24,11 @@ export default function CommentsWrapper({ comments, status, beerId }: Props) {
       if ("data" in newCommentResponse && newCommentResponse.data) {
         setCommentList((prev) => [...prev, newCommentResponse.data]);
       }
+      toast.success("Comment added successfully");
     } catch (error) {
-      console.error(error);
+      const errorMessage =
+        (error as any).response?.data?.message || "Error adding comment";
+      toast.error(errorMessage);
     }
   };
 
