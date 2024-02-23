@@ -147,17 +147,17 @@ Follow these steps to install and run the Beer Collection App in production mode
     yarn build
     ```
 
-4. Once application build is done successfully stop the running development mode on 3rd step.
+5. Once application build is done successfully stop the running development mode on 3rd step.
     ```bash
     CTRL + c
     ```
 
-4. Start the application in any terminal window or tab.
+7. Start the application in any terminal window or tab.
     ```bash
     yarn start
     ```
 
-5. Visit `http://localhost:3000`
+8. Visit `http://localhost:3000` if it doesn't start build standalone and start the project again.
 
 ## Usage
 Once the application is running, you can access it in your web browser at `http://localhost:3000`.
