@@ -43,3 +43,11 @@ export default async function DetailPage({ params }: Params) {
     }
   }
 }
+
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const { data: beer } = await getBeerById(params.id);
+  return {
+    title: beer?.name,
+    description: beer?.tagline,
+  };
+}
