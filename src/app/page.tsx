@@ -58,9 +58,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     return (
       <>
         <Filters />
-        <Suspense fallback={<BeerListLoading />}>
-          <BeerList beers={beers} />
-        </Suspense>
+        {beers.length === 0 ? (
+          <ErrorMessage message="No beers found" className="text-xl" />
+        ) : (
+          <Suspense fallback={<BeerListLoading />}>
+            <BeerList beers={beers} />
+          </Suspense>
+        )}
         {beers.length === total ? null : (
           <div className="w-full mt-4 text-center">
             <Link

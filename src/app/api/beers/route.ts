@@ -22,8 +22,10 @@ export async function GET(
     const _order = searchParams.get("_order") || "asc";
 
     if (searchTerm) {
-      beers = beers.filter((beer: Beer) =>
-        beer.name.toLowerCase().includes(searchTerm.toLowerCase())
+      beers = beers.filter(
+        (beer: Beer) =>
+          beer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          beer.tagline.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
