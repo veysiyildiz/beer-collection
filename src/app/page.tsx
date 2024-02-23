@@ -1,15 +1,15 @@
 import React, { Suspense } from "react";
-import { redirect } from "next/navigation";
-import { ErrorMessage } from "@/components/atoms";
+import { Button, ErrorMessage } from "@/components/atoms";
 import { getBeers } from "@/app/actions/getBeers";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, sortOptions } from "@/lib/constants";
-import HomePageTemplate from "@/components/templates/HomePageTemplate";
+import Link from "next/link";
+import { BeerList, BeerListLoading, Filters } from "@/components/organisms";
 
 type HomePageProps = {
   searchParams: {
     searchTerm?: string;
     sortOption?: string;
-    order?: string;
+    _order?: string;
   };
 };
 
@@ -19,11 +19,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   let total = 0;
   let error = null;
 
-  const page = DEFAULT_PAGE;
-  const limit = DEFAULT_PAGE_SIZE;
+  const page = searchParams.page || DEFAULT_PAGE;
+  const limit = searchParams.limit || DEFAULT_PAGE_SIZE;
   const searchTerm = searchParams.searchTerm || "";
-  const sortOption = searchParams.sortOption || "";
-  const order = searchParams.order || "desc";
+  const sortOption = searchParams.sortOption || "name";
+  const _order = searchParams._order || "asc";
 
   try {
     const response = await getBeers({
@@ -31,7 +31,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       limit,
       searchTerm,
       sortOption,
-      order,
+      _order,
     });
     beers = response?.data?.beers;
     total = response?.data?.total;
@@ -55,7 +55,27 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   } else {
     return (
       <>
-        <HomePageTemplate beers={beers} status={status} total={total} />
+        <Filters />
+        <Suspense fallback={<BeerListLoading />}>
+          <BeerList beers={beers} />
+        </Suspense>
+        {beers.length === total ? null : (
+          <div className="w-full mt-4 text-center">
+            <Link
+              href={`
+                ?${new URLSearchParams({
+                  searchTerm,
+                  sortOption,
+                  _order,
+                  page: Number(page) + 1,
+                }).toString()}
+              `}
+              scroll={false}
+            >
+              <Button variant="primary">Load More</Button>
+            </Link>
+          </div>
+        )}
       </>
     );
   }

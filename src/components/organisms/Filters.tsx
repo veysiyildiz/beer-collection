@@ -1,6 +1,6 @@
 import React from "react";
 import { Search } from "@/components/molecules";
-import { Select } from "@/components/atoms";
+import { Select, SortButtons } from "@/components/atoms";
 
 const Filters: React.FC = () => {
   return (
@@ -8,6 +8,7 @@ const Filters: React.FC = () => {
       <Search />
       <div className="flex items-center">
         <Select />
+        <SortButtons />
       </div>
     </div>
   );

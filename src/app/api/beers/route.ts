@@ -18,8 +18,8 @@ export async function GET(
     const page = Number(searchParams.get("page")) || 1;
     const limit = Number(searchParams.get("limit")) || 10;
     const searchTerm = searchParams.get("searchTerm") || "";
-    const sortOption = searchParams.get("sortOption") || "";
-    const order = searchParams.get("_order") || "desc";
+    const sortOption = searchParams.get("sortOption") || "name";
+    const _order = searchParams.get("_order") || "asc";
 
     if (searchTerm) {
       beers = beers.filter((beer: Beer) =>
@@ -29,7 +29,7 @@ export async function GET(
 
     if (sortOption) {
       beers.sort((a, b) => {
-        if (order === "desc") {
+        if (_order === "desc") {
           return (b[sortOption as keyof Beer] as any) >
             (a[sortOption as keyof Beer] as any)
             ? 1
@@ -49,7 +49,7 @@ export async function GET(
       return NextResponse.json({ total, beers });
     }
 
-    const startIndex = (page - 1) * limit;
+    const startIndex = 0;
     const endIndex = page * limit;
 
     const paginatedBeers = beers.slice(startIndex, endIndex);

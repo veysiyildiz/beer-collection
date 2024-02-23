@@ -9,7 +9,7 @@ The information about the beers is stored in a `db.json` file in the main folder
 Adding a db.json file to the project brings some issues when deploying, simply it can not be deployed on a server. And for production build it is also a bit tricky. To deal with this, we need to start the project in development mode first to fetch data for server caching. While in development mode, we can build the project in another terminal window but the first build gives error and generates the necessary files and the second build runs smoothly. When switching to production mode, we have to stop development mode after building and then start the project again. The steps to build for production explained in related section.
 
 ## Loading and Filtering States
-I have used `react-loading-skeleton` to show a loading state as a placeholder until the data is ready. I also added filter states and search term to searchParams as a better practice for user experience. A user can share a search/filter result page url or bookmark it to see the same results in somewhere else. Unfortunately infinite scroll needs client-side rendering and to be able to persist it, it needs localstorage which I didn't implement here.
+I have used `react-loading-skeleton` to show a loading state as a placeholder until the data is ready. I also added filter states and search term to searchParams as a better practice for user experience. A user can share a search/filter result page url or bookmark it to see the same results in somewhere else.
 
 ## Forms
 The forms in the app using `react-hook-form` and `zod`. It's awesome for managing the form data and validation.
@@ -73,6 +73,7 @@ I used the following documents during coding:
             - `Logo.tsx`
             - `Rating.tsx`
             - `Select.tsx`
+            - `SortButtons.tsx`
             - `Spinner.tsx`
             - `Text.tsx`
             - `Textarea.tsx`
@@ -94,12 +95,9 @@ I used the following documents during coding:
             - `BottomBar.tsx`
             - `CommentForm.tsx`
             - `CommentsWrapper.tsx`
-            - `Filters.tsx`
             - `LeftSideBar.tsx`
             - `TopBar.tsx`
             - `index.tsx`
-        - `templates`
-            - `HomePageTemplate.tsx`
     - `interfaces`
         - `index.ts`
     - `lib`

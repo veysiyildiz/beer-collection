@@ -8,6 +8,7 @@ import Logo from "./Logo";
 import Select from "./Select";
 import Spinner from "./Spinner";
 import Rating from "./Rating";
+import SortButtons from "./SortButtons";
 
 export {
   Button,
@@ -20,4 +21,5 @@ export {
   Select,
   Spinner,
   Rating,
+  SortButtons,
 };
