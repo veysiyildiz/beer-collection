@@ -18,7 +18,7 @@ export async function getBeers({
   let data = null;
   try {
     const res = await fetch(
-      `${API_URL}/api/beers?page=${page}&limit=${limit}&searchTerm=${searchTerm}&sortOption=${sortOption}&_order=${_order}`
+      `${API_URL}api/beers?page=${page}&limit=${limit}&searchTerm=${searchTerm}&sortOption=${sortOption}&_order=${_order}`
     );
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -40,7 +40,7 @@ export async function addBeer(beer: Beer) {
   let status = "loading";
   let data = null;
   try {
-    const res = await fetch(`${API_URL}/api/beers/add`, {
+    const res = await fetch(`${API_URL}api/beers/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

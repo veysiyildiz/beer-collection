@@ -5,7 +5,7 @@ export async function getAllBeers() {
   let data = null;
   try {
     const res = await fetch(
-      `${API_URL}/api/beers?page=0&limit=0&searchTerm=&sortOption=&_order=desc`
+      `${API_URL}api/beers?page=0&limit=0&searchTerm=&sortOption=&_order=desc`
     );
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -29,7 +29,7 @@ export async function getBeerById(id: string) {
   let status = "loading";
 
   try {
-    const res = await fetch(`${API_URL}/api/beers/${id}`);
+    const res = await fetch(`${API_URL}api/beers/${id}`);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -50,7 +50,7 @@ export async function getCommentsByBeerId(id: string) {
   let data = null;
 
   try {
-    const res = await fetch(`${API_URL}/api/comments/${id}`);
+    const res = await fetch(`${API_URL}api/comments/${id}`);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -69,7 +69,7 @@ export async function rateTheBeer(id: string, rating: number) {
   let data = null;
 
   try {
-    const res = await fetch(`${API_URL}/api/rating/${id}`, {
+    const res = await fetch(`${API_URL}api/rating/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -95,7 +95,7 @@ export async function addComment(beerId: string, text: string) {
   let data = null;
 
   try {
-    const res = await fetch(`${API_URL}/api/comments/${beerId}`, {
+    const res = await fetch(`${API_URL}api/comments/${beerId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

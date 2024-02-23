@@ -83,7 +83,6 @@ I used the following documents during coding:
             - `MenuItem.tsx`
             - `Properties.tsx`
             - `Search.tsx`
-            - `SortFilter.tsx`
             - `index.tsx`
         - `organisms`
             - `BeerDetail.tsx`
@@ -93,6 +92,7 @@ I used the following documents during coding:
             - `BottomBar.tsx`
             - `CommentForm.tsx`
             - `CommentsWrapper.tsx`
+            - `Filters.tsx`
             - `LeftSideBar.tsx`
             - `TopBar.tsx`
             - `index.tsx`
