@@ -47,24 +47,3 @@ export default async function DetailPage({ params }: Params) {
     }
   }
 }
-
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { data: beer } = await getBeerById(params.id);
-
-  return {
-    title: beer?.name,
-    description: beer?.tagline,
-  };
-}
-
-export async function generateStaticParams() {
-  const beersData: { data: Beer[] } = await getAllBeers();
-
-  if (beersData.data) {
-    return beersData.data.map((beer) => ({
-      id: beer.id,
-    }));
-  } else {
-    return [];
-  }
-}
