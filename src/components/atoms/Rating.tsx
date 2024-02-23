@@ -35,7 +35,7 @@ const Rating: React.FC<RatingProps> = ({
         toast.success("Rating updated successfully");
       } catch (error) {
         const errorMessage =
-          error.response?.data?.message || "Error updating rating";
+          (error as any).response?.data?.message || "Error updating rating";
         toast.error(errorMessage);
       }
     }

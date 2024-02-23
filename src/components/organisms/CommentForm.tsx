@@ -40,7 +40,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ onAddComment }) => {
         toast.success("Comment added successfully");
       } catch (error) {
         const errorMessage =
-          error.response?.data?.message || "Error adding comment";
+          (error as any).response?.data?.message || "Error adding comment";
         toast.error(errorMessage);
       }
     },

@@ -73,7 +73,8 @@ const BeerForm: React.FC = () => {
       setNewBeer(beer);
       toast.success("Beer added successfully");
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Error adding beer";
+      const errorMessage =
+        (error as any).response?.data?.message || "Error adding beer";
       toast.error(errorMessage);
     }
   };
