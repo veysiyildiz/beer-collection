@@ -27,11 +27,7 @@ export default async function DetailPage({ params }: Params) {
       return (
         beer && (
           <div className="grid gap-4">
-            <BeerDetail
-              status={status}
-              beer={beer}
-              averageRating={beer.averageRating}
-            />
+            <BeerDetail status={status} beer={beer} />
             <CommentsWrapper
               status={status}
               comments={comments.data || []}

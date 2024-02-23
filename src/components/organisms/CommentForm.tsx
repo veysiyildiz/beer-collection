@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback } from "react";
+import { toast } from "react-hot-toast";
 import { addComment } from "@/app/actions/getBeerDetail";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,8 +34,15 @@ const CommentForm: React.FC<CommentFormProps> = ({ onAddComment }) => {
   const onSubmit = useCallback(
     async (data: { text: string }) => {
       const { text } = data;
-      await onAddComment(text);
-      reset();
+      try {
+        await onAddComment(text);
+        reset();
+        toast.success("Comment added successfully");
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message || "Error adding comment";
+        toast.error(errorMessage);
+      }
     },
     [onAddComment, reset]
   );

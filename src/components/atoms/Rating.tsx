@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { rateTheBeer } from "@/app/actions/getBeerDetail";
 import { Star } from "lucide-react";
 
@@ -25,11 +26,18 @@ const Rating: React.FC<RatingProps> = ({
   const handleClick = async (event: React.MouseEvent, value: number) => {
     event.stopPropagation();
     if (clickable) {
-      const rating = value;
-      ("use server");
-      const { data } = await rateTheBeer(beerId, rating);
-      const beer = data.beer;
-      setRatingValue(beer.averageRating);
+      try {
+        const rating = value;
+        ("use server");
+        const { data } = await rateTheBeer(beerId, rating);
+        const beer = data.beer;
+        setRatingValue(beer.averageRating);
+        toast.success("Rating updated successfully");
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message || "Error updating rating";
+        toast.error(errorMessage);
+      }
     }
   };
 

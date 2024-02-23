@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { addBeer } from "@/app/actions/getBeers";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -66,9 +67,15 @@ const BeerForm: React.FC = () => {
       id: Date.now().toString(),
       food_pairing: data.food_pairing.split("\n"),
     };
-    ("use server");
-    await addBeer(beer);
-    setNewBeer(beer);
+    try {
+      ("use server");
+      await addBeer(beer);
+      setNewBeer(beer);
+      toast.success("Beer added successfully");
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "Error adding beer";
+      toast.error(errorMessage);
+    }
   };
 
   return (

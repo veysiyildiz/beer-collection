@@ -10,15 +10,10 @@ import Image from "next/image";
 
 interface BeerDetailProps {
   beer: Beer;
-  averageRating?: number;
   status?: string;
 }
 
-const BeerDetail: React.FC<BeerDetailProps> = ({
-  beer,
-  averageRating,
-  status,
-}) => {
+const BeerDetail: React.FC<BeerDetailProps> = ({ beer, status }) => {
   const isLoading = status === "loading";
 
   if (isLoading) {
@@ -54,7 +49,7 @@ const BeerDetail: React.FC<BeerDetailProps> = ({
         />
         <Rating
           className="mt-4"
-          rating={averageRating || 0}
+          rating={beer?.averageRating || 0}
           clickable
           beerId={beer?.id}
         />

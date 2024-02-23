@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { TopBar, LeftSideBar, BottomBar } from "@/components/organisms";
@@ -28,6 +29,7 @@ export default function RootLayout({
               <div className="w-full max-4xl">{children}</div>
             </section>
             <BottomBar />
+            <Toaster position="bottom-right" />
           </main>
         </div>
       </body>
