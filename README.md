@@ -138,17 +138,15 @@ Follow these steps to install and run the Beer Collection App in production mode
     yarn
     ```
 
-3. Build the application in a separate terminal window or tab. The second build runs smoothly.
+3. Build the application.
     ```bash
     yarn build
     ```
 
-4. Start the application in any terminal window or tab.
+4. Start the application.
     ```bash
     yarn start
     ```
-
-5. Visit `http://localhost:3000`
 
 ## Usage
 Once the application is running, you can access it in your web browser at `http://localhost:3000`.
