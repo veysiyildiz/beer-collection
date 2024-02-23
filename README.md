@@ -1,5 +1,8 @@
 # Beer Collection App Documentation
 
+## Demo
+You can view a live demo of the Beer Collection App at [Demo Link](https://beer-collection-sigma.vercel.app/)
+
 ## Introduction
 This is the Beer Collection App. It's built with NextJS ❤️, server-side rendering first . You can add beers to your collection. You can also give beers a rating and leave comments.
 
