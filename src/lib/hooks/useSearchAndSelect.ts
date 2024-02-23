@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import debounce from "lodash/debounce";
 
@@ -44,6 +44,14 @@ export const useSearchAndSelect = () => {
     newSearchParams.set("_order", newOrder);
     router.push(`${pathname}?${newSearchParams.toString()}`);
   };
+
+  useEffect(() => {
+    const newSearchTerm = searchParams.get("searchTerm") || "";
+    setSearchTerm(newSearchTerm);
+
+    const newSortOption = searchParams.get("sortOption") || "";
+    setSelectedSortOption(newSortOption);
+  }, [pathname, searchParams]);
 
   return {
     searchTerm,
