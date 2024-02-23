@@ -2,8 +2,8 @@ import { API_URL, DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "@/lib/constants";
 import { Beer, Status } from "@/interfaces";
 
 export async function getBeers({
-  page = DEFAULT_PAGE,
-  limit = DEFAULT_PAGE_SIZE,
+  page = Number(DEFAULT_PAGE),
+  limit = Number(DEFAULT_PAGE_SIZE),
   searchTerm = "",
   sortOption = "name",
   _order = "asc",

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import SortButtons from "./SortButtons";
 import { useSearchAndSelect } from "@/lib/hooks/useSearchAndSelect";
 
 interface SelectProps {

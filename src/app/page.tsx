@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Button, ErrorMessage } from "@/components/atoms";
 import { getBeers } from "@/app/actions/getBeers";
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, sortOptions } from "@/lib/constants";
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "@/lib/constants";
 import Link from "next/link";
 import { BeerList, BeerListLoading, Filters } from "@/components/organisms";
 
@@ -10,6 +10,8 @@ type HomePageProps = {
     searchTerm?: string;
     sortOption?: string;
     _order?: string;
+    page?: string;
+    limit?: string;
   };
 };
 
@@ -19,8 +21,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   let total = 0;
   let error = null;
 
-  const page = searchParams.page || DEFAULT_PAGE;
-  const limit = searchParams.limit || DEFAULT_PAGE_SIZE;
+  const page = parseInt(searchParams.page || DEFAULT_PAGE, 10);
+  const limit = parseInt(searchParams.limit || DEFAULT_PAGE_SIZE, 10);
   const searchTerm = searchParams.searchTerm || "";
   const sortOption = searchParams.sortOption || "name";
   const _order = searchParams._order || "asc";
@@ -67,7 +69,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                   searchTerm,
                   sortOption,
                   _order,
-                  page: Number(page) + 1,
+                  page: (page + 1).toString(),
                 }).toString()}
               `}
               scroll={false}

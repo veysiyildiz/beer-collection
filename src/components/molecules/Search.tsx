@@ -5,19 +5,7 @@ import { Search as SearchIcon } from "lucide-react";
 import { Input } from "@/components/atoms";
 import { useSearchAndSelect } from "@/lib/hooks/useSearchAndSelect";
 
-interface SortButtonsProps {
-  searchTerm: string;
-  sortOption: string;
-  _order: string;
-  page: number;
-}
-
-const Search: React.FC<SearchProps> = ({
-  searchTerm: initialSearchTerm,
-  sortOption,
-  _order,
-  page,
-}) => {
+const Search: React.FC = () => {
   const { searchTerm, handleSearchChange } = useSearchAndSelect();
 
   return (
