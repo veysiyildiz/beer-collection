@@ -1,20 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { toast } from "react-hot-toast";
 import { addBeer } from "@/app/actions/getBeers";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {
-  Input,
-  Button,
-  Label,
-  TextArea,
-  ErrorMessage,
-} from "@/components/atoms";
+import { Input, Label, TextArea, ErrorMessage } from "@/components/atoms";
 import { Beer } from "@/interfaces";
+import { SubmitButton } from "@/components/molecules";
 
 const schema = z.object({
   name: z.string().nonempty({ message: "Name is required" }),
@@ -22,6 +16,7 @@ const schema = z.object({
   first_brewed: z.string().nonempty({ message: "First brewed is required" }),
   description: z.string().nonempty({ message: "Description is required" }),
   image_url: z.string().nonempty({ message: "Image URL is required" }),
+  id: z.string().nonempty({ message: "ID is required" }),
   abv: z
     .string()
     .transform((val) => parseFloat(val))
@@ -35,55 +30,50 @@ const schema = z.object({
     .nonempty({ message: "Contributed by is required" }),
 });
 
-type FormData = Omit<Beer, "food_pairing"> & { food_pairing: string };
+type FormType = Omit<Beer, "food_pairing"> & { food_pairing: string };
 
 const BeerForm: React.FC = () => {
-  const router = useRouter();
-  const [newBeer, setNewBeer] = useState<Beer | null>(null);
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<FormType>({
     resolver: zodResolver(schema),
   });
 
-  useEffect(() => {
-    setValue("image_url", defaultImageUrl);
-  }, [setValue]);
-
-  useEffect(() => {
-    if (newBeer) {
-      router.push(`/beer/${newBeer.id}`);
-    }
-  }, [router, newBeer]);
-
   const defaultImageUrl = "https://picsum.photos/200/300";
 
-  const onSubmit = async (data: FormData) => {
+  const addBeerClientAction = async (formData: FormData) => {
+    const data = Object.fromEntries(formData);
     const beer: Beer = {
-      ...data,
-      id: Date.now().toString(),
-      food_pairing: data.food_pairing.split("\n"),
+      abv: Number(data.abv),
+      brewers_tips: data.brewers_tips.toString(),
+      contributed_by: data.contributed_by.toString(),
+      description: data.description.toString(),
+      first_brewed: data.first_brewed.toString(),
+      id: data.id.toString(),
+      image_url: data.image_url.toString(),
+      name: data.name.toString(),
+      tagline: data.tagline.toString(),
+      food_pairing: data.food_pairing.toString().split("\n"),
+      averageRating: 0,
     };
-    try {
-      ("use server");
-      await addBeer(beer);
-      setNewBeer(beer);
-      toast.success("Beer added successfully");
-    } catch (error) {
+
+    const response = await addBeer(beer);
+    if (response instanceof Error) {
       const errorMessage =
-        (error as any).response?.data?.message || "Error adding beer";
+        (errors as any).response?.data?.message || "Error adding beer";
       toast.error(errorMessage);
+    } else {
+      toast.success("Beer added successfully");
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="w-full max-w-lg p-4 mx-auto"
-    >
+    <form action={addBeerClientAction} className="w-full max-w-lg p-4 mx-auto">
+      <input type="hidden" {...register("id")} value={Date.now().toString()} />
+      <input type="hidden" {...register("image_url")} value={defaultImageUrl} />
       <Label text="Name" htmlFor="name" />
       <Input
         id="name"
@@ -149,13 +139,7 @@ const BeerForm: React.FC = () => {
       />
       <ErrorMessage message={errors.contributed_by?.message} />
 
-      <Button
-        className="w-full"
-        variant="primary"
-        onClick={handleSubmit(onSubmit)}
-      >
-        Add Beer
-      </Button>
+      <SubmitButton>Add Beer</SubmitButton>
     </form>
   );
 };

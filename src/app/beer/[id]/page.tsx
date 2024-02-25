@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import { ErrorMessage } from "@/components/atoms";
 import { BeerDetail, CommentsWrapper } from "@/components/organisms";
-import {
-  getBeerById,
-  getAllBeers,
-  getCommentsByBeerId,
-} from "@/app/actions/getBeerDetail";
+import { getBeerById, getCommentsByBeerId } from "@/app/actions/getBeerDetail";
 import { Beer } from "@/interfaces";
 
 interface Params {
@@ -15,33 +11,21 @@ interface Params {
 }
 
 export default async function DetailPage({ params }: Params) {
-  try {
-    const [{ data: beer, status }, comments] = await Promise.all([
-      getBeerById(params.id),
-      getCommentsByBeerId(params.id),
-    ]);
-
-    if (status === "failed") {
-      throw new Error("Failed to fetch beer data");
-    } else {
-      return (
-        beer && (
-          <div className="grid gap-4">
-            <BeerDetail status={status} beer={beer} />
-            <CommentsWrapper
-              status={status}
-              comments={comments.data || []}
-              beerId={beer.id}
-            />
-          </div>
-        )
-      );
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      return <ErrorMessage message={error.message} className="text-xl" />;
-    }
+  if (!params.id) {
+    return <ErrorMessage message="Invalid beer id" />;
   }
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  const [{ data: beer }, comments] = await Promise.all([
+    getBeerById(params.id),
+    getCommentsByBeerId(params.id),
+  ]);
+
+  return (
+    <div className="grid gap-4">
+      <BeerDetail beer={beer} />
+      <CommentsWrapper comments={comments.data || []} beerId={params.id} />
+    </div>
+  );
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {

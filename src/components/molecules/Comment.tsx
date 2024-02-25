@@ -5,24 +5,9 @@ import { Comment } from "@/interfaces";
 
 interface CommentsProps {
   comments: any[];
-  status: string;
 }
 
-const Comments: React.FC<CommentsProps> = ({ comments, status }) => {
-  const isLoading = status === "loading";
-
-  if (isLoading) {
-    return (
-      <div className="space-y-4 p-4 border-1 border-gray-300 rounded shadow">
-        <Text variant="h2">
-          <Skeleton width={100} />
-        </Text>
-        <div className="p-4 border-b-2 border-gray-200 rounded shadow my-2">
-          <Skeleton count={2} />
-        </div>
-      </div>
-    );
-  }
+const Comments: React.FC<CommentsProps> = ({ comments }) => {
   return (
     <div className="space-y-4 p-4 border-1 border-gray-300 rounded shadow">
       <Text variant="h2">Comments</Text>

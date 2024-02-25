@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Skeleton from "react-loading-skeleton";
 import { Text, Rating } from "@/components/atoms";
 import { Beer } from "@/interfaces";
 

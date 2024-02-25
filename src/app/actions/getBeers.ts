@@ -1,5 +1,9 @@
+"use server";
+
 import { API_URL, DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "@/lib/constants";
 import { Beer, Status } from "@/interfaces";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function getBeers({
   page = Number(DEFAULT_PAGE),
@@ -14,7 +18,6 @@ export async function getBeers({
   sortOption: string;
   _order: string;
 }) {
-  let status = "loading";
   let data = null;
   try {
     const res = await fetch(
@@ -24,21 +27,19 @@ export async function getBeers({
       throw new Error("Failed to fetch data");
     }
     data = await res.json();
-    status = "success";
   } catch (error) {
-    status = "failed";
     if (error instanceof Error) {
       throw new Error(error.message);
     } else {
       throw new Error("An unknown error occurred");
     }
   }
-  return { status, data };
+  return { data };
 }
 
 export async function addBeer(beer: Beer) {
-  let status = "loading";
-  let data = null;
+  let data: Beer = beer;
+
   try {
     const res = await fetch(`${API_URL}api/beers/add`, {
       method: "POST",
@@ -50,16 +51,18 @@ export async function addBeer(beer: Beer) {
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
+    revalidatePath("/");
+    revalidatePath(`/beer/${beer.id}`);
     data = await res.json();
-    status = "success";
   } catch (error) {
-    status = "failed";
     if (error instanceof Error) {
       throw new Error(error.message);
     } else {
       throw new Error("An unknown error occurred");
     }
+  } finally {
+    redirect(`/beer/${beer.id}`);
   }
 
-  return { status, data };
+  return { data };
 }

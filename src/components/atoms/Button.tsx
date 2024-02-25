@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   let buttonClass = "";
   const defaultAriaLabel = typeof children === "string" ? children : "Button";
-  const disabledClass = disabled ? "opacity-50 cursor-not-allowed" : "";
+  const disabledClass = disabled ? "opacity-20 cursor-not-allowed" : "";
 
   switch (variant) {
     case "primary":

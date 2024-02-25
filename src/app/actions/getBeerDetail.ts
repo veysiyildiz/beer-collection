@@ -1,5 +1,8 @@
+"use server";
+
 import { API_URL } from "@/lib/constants";
 import { Beer, Comment, Status } from "@/interfaces";
+import { revalidatePath } from "next/cache";
 
 export async function getAllBeers() {
   let data = null;
@@ -26,7 +29,6 @@ export async function getAllBeers() {
 
 export async function getBeerById(id: string) {
   let data = null;
-  let status = "loading";
 
   try {
     const res = await fetch(`${API_URL}api/beers/${id}`);
@@ -34,16 +36,14 @@ export async function getBeerById(id: string) {
       throw new Error("Failed to fetch data");
     }
     data = await res.json();
-    status = "success";
   } catch (error) {
-    status = "failed";
     if (error instanceof Error) {
       throw new Error(error.message);
     } else {
       throw new Error("An unknown error occurred");
     }
   }
-  return { status, data };
+  return { data };
 }
 
 export async function getCommentsByBeerId(id: string) {
@@ -80,8 +80,9 @@ export async function rateTheBeer(id: string, rating: number) {
       throw new Error("Failed to fetch data");
     }
     data = await res.json();
+    revalidatePath(`/`);
+    revalidatePath(`/beer/${id}`);
   } catch (error) {
-    status = "failed";
     if (error instanceof Error) {
       throw new Error(error.message);
     } else {
@@ -91,25 +92,21 @@ export async function rateTheBeer(id: string, rating: number) {
   return { data };
 }
 
-export async function addComment(beerId: string, text: string) {
-  let data = null;
-
+export async function addComment(data: Comment) {
   try {
-    const res = await fetch(`${API_URL}api/comments/${beerId}`, {
+    const res = await fetch(`${API_URL}api/comments/${data.beerId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ text }),
+      body: JSON.stringify({ ...data }),
     });
-
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
-
+    revalidatePath(`/beer/${data.beerId}`);
     data = await res.json();
   } catch (error) {
-    status = "failed";
     if (error instanceof Error) {
       throw new Error(error.message);
     } else {

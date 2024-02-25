@@ -47,8 +47,6 @@ export async function POST(
     const data = await request.json();
 
     const newComment: Comment = {
-      beerId: params.id.toString(),
-      id: Date.now().toString(),
       ...data,
     };
 

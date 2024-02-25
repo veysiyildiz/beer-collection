@@ -9,7 +9,6 @@ export async function GET(
   try {
     const dbPath = path.join(process.cwd(), "db.json");
     const dbContents = fs.readFileSync(dbPath, "utf8");
-
     let { beers }: { beers: Beer[] } = JSON.parse(dbContents);
 
     const url = new URL(request.url);
