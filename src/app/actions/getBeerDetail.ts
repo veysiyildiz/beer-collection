@@ -99,7 +99,7 @@ export async function addComment(data: Comment) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...data }),
+      body: JSON.stringify(data),
     });
     if (!res.ok) {
       throw new Error("Failed to fetch data");
