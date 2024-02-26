@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { twMerge } from "tailwind-merge";
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -41,7 +42,12 @@ const Button: React.FC<ButtonProps> = ({
     <button
       onClick={onClick}
       type={type}
-      className={`py-2 px-4 rounded ${buttonClass} ${className} ${disabledClass}`}
+      className={twMerge(
+        "py-2 px-4 rounded",
+        buttonClass,
+        className,
+        disabledClass
+      )}
       aria-label={ariaLabel || defaultAriaLabel}
       disabled={disabled}
     >

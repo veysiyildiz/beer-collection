@@ -1,4 +1,5 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 interface ErrorMessageProps {
   message?: string;
@@ -11,7 +12,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, className }) => {
   }
 
   return (
-    <p role="alert" className={`text-red-500 text-sm ${className}`}>
+    <p role="alert" className={twMerge("text-red-500 text-sm", className)}>
       {message}
     </p>
   );

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { rateTheBeer } from "@/app/actions/getBeerDetail";
 import { Star } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 
 interface RatingProps {
   rating: number;
@@ -77,13 +78,13 @@ const Rating: React.FC<RatingProps> = ({
               className="hidden"
             />
             <Star
-              className={
+              className={twMerge(
                 ratingValue <= (hover || newRatingValue)
                   ? "text-yellow-500"
                   : clickable
                   ? "text-gray-500 hover:text-yellow-500"
                   : "text-gray-500"
-              }
+              )}
               size={16}
               strokeWidth={3}
             />

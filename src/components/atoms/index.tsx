@@ -6,7 +6,6 @@ import ErrorMessage from "./ErrorMessage";
 import Text from "./Text";
 import Logo from "./Logo";
 import Select from "./Select";
-import Spinner from "./Spinner";
 import Rating from "./Rating";
 import SortButtons from "./SortButtons";
 
@@ -19,7 +18,6 @@ export {
   Text,
   Logo,
   Select,
-  Spinner,
   Rating,
   SortButtons,
 };

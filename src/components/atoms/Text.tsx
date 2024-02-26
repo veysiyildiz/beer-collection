@@ -1,4 +1,5 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 interface TextProps {
   variant: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span";
@@ -26,7 +27,7 @@ const Text: React.FC<TextProps> = ({
   }[variant];
 
   return (
-    <Component className={`${baseStyle} ${variantStyle} ${className}`}>
+    <Component className={twMerge(baseStyle, variantStyle, className)}>
       {children}
     </Component>
   );

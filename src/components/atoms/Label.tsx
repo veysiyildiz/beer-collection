@@ -1,4 +1,5 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 interface LabelProps {
   text?: string;
@@ -16,7 +17,10 @@ const Label: React.FC<LabelProps> = ({
   return (
     <label
       htmlFor={htmlFor}
-      className={`block text-md font-bold mb-2 text-gray-700 ${className}`}
+      className={twMerge(
+        "block text-md font-bold mb-2 text-gray-700",
+        className
+      )}
     >
       {children}
       {text}

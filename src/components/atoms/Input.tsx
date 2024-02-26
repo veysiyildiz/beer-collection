@@ -1,4 +1,5 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 interface InputProps {
   placeholder?: string;
@@ -21,7 +22,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         type={type}
         placeholder={placeholder}
-        className={`border rounded w-full py-2 px-3 mb-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${className}`}
+        className={twMerge(
+          "border rounded w-full py-2 px-3 mb-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+          className
+        )}
         hidden={hidden}
         aria-label={placeholder}
         onChange={onChange}

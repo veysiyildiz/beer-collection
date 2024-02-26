@@ -1,4 +1,5 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 interface TextAreaProps {
   placeholder: string;
@@ -13,7 +14,10 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
         ref={ref}
         id={id}
         placeholder={placeholder}
-        className={`border border-gray-300 rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${className}`}
+        className={twMerge(
+          "border border-gray-300 rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+          className
+        )}
         aria-label={placeholder}
         {...props}
       />
