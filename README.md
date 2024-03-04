@@ -1,7 +1,7 @@
 # Beer Collection App Documentation
 
 ## Demo
-You can view a live demo of the Beer Collection App at [Demo Link](https://beer-collection-sigma.vercel.app/)
+You can view a live demo of the Beer Collection App at [Demo Link](https://beer-collection-sigma.vercel.app/) But unfortunately the adding functionalities like add beer, add comment, and rate a beer is not working on vercel. It's because of all the files are read-only and the project uses the dB.json file as database. You can check that functionalities on your local development or production environment. 
 
 ## Introduction
 This is the Beer Collection App. It's built with NextJS ❤️, server-side rendering first . You can add beers to your collection. You can also give beers a rating and leave comments.
@@ -10,7 +10,7 @@ This is the Beer Collection App. It's built with NextJS ❤️, server-side rend
 The information about the beers is stored in a `db.json` file in the main folder of the project. The reason I have used a JSON file instead of utilizing a pre-existing API is to showcase my backend development skills and also show how I use NextJS API Routes and server actions. The second reason is to be able add comments and ratings to the beers and also showcase my ability to manipulate data and simulate a database environment. I have created db.json from `https://api.punkapi.com/v2/beers` endpoint deleted lots of info there and added a comments and a ratings array also to emulate a flat database structure.
 
 ## Loading and Filtering States
-I have used `react-loading-skeleton` to show a loading state as a placeholder until the data is ready. I also added filter states and search term to searchParams as a better practice for user experience. A user can share a search/filter result page url or bookmark it to see the same results in somewhere else.
+I have used `react-loading-skeleton` to show a loading state as a placeholder until the data is ready, and added 500ms delay to APIs to see the loading state. I also added filter states and search term to searchParams as a better practice for user experience. A user can share a search/filter result page url or bookmark it to see the same results in somewhere else.
 
 ## Forms
 The forms in the app using `react-hook-form` and `zod`. It's awesome for managing the form data and validation.
