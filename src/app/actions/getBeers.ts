@@ -59,9 +59,7 @@ export async function addBeer(beer: Beer) {
     } else {
       throw new Error("An unknown error occurred");
     }
-  } finally {
-    redirect(`/beer/${beer.id}`);
   }
-
+  redirect(`/beer/${beer.id}`);
   return { data };
 }
