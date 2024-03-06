@@ -66,7 +66,7 @@ const Rating: React.FC<RatingProps> = ({
             onMouseLeave={handleMouseLeave}
             onClick={(event) => handleClick(event, ratingValue)}
             aria-label={`Rate ${ratingValue} out of 5`}
-            tabIndex={0}
+            tabIndex={clickable ? 0 : -1}
             role="radio"
             aria-checked={ratingValue <= (hover || newRatingValue)}
           >

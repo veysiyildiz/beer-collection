@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Button, Text } from "@/components/atoms";
 
 interface MenuItemProps {
@@ -8,12 +9,12 @@ interface MenuItemProps {
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ href, icon: Icon, label }) => (
-  <Button href={href} className="flex items-center space-x-2" ariaLabel={label}>
+  <Link href={href} className="flex items-center space-x-2" ariaLabel={label}>
     {Icon && <Icon />}
     <Text variant="span" className="menu-item-label max-sm:hidden">
       {label}
     </Text>
-  </Button>
+  </Link>
 );
 
 export default MenuItem;
