@@ -9,7 +9,7 @@ interface MenuItemProps {
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ href, icon: Icon, label }) => (
-  <Link href={href} className="flex items-center space-x-2" ariaLabel={label}>
+  <Link href={href} className="flex items-center space-x-2" aria-label={label}>
     {Icon && <Icon />}
     <Text variant="span" className="menu-item-label max-sm:hidden">
       {label}
