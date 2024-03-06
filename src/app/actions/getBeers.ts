@@ -52,7 +52,6 @@ export async function addBeer(beer: Beer) {
       throw new Error("Failed to fetch data");
     }
     revalidatePath("/");
-    revalidatePath(`/beer/${beer.id}`);
     data = await res.json();
   } catch (error) {
     if (error instanceof Error) {
