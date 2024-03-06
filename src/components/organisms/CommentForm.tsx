@@ -48,13 +48,13 @@ const CommentForm: React.FC<CommentFormProps> = ({ beerId }) => {
       id: data.id.toString(),
       text: data.text.toString(),
     };
-
-    const res = await addComment(comment);
-    if (res instanceof Error) {
-      toast.error(res.message);
-    } else {
-      reset();
+    try {
+      const res = await addComment(comment);
       toast.success("Comment added successfully");
+    } catch (error) {
+      toast.error(
+        (error as any).response?.data?.message || "Error adding comment"
+      );
     }
   }
 

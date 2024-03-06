@@ -29,7 +29,6 @@ const Rating: React.FC<RatingProps> = ({
     if (clickable) {
       try {
         const rating = value;
-        ("use server");
         const { data } = await rateTheBeer(beerId, rating);
         const beer = data.beer;
         setRatingValue(beer.averageRating);

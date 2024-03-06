@@ -59,14 +59,13 @@ const BeerForm: React.FC = () => {
       food_pairing: data.food_pairing.toString().split("\n"),
       averageRating: 0,
     };
-
-    const response = await addBeer(beer);
-    if (response instanceof Error) {
-      const errorMessage =
-        (errors as any).response?.data?.message || "Error adding beer";
-      toast.error(errorMessage);
-    } else {
+    try {
+      const response = await addBeer(beer);
       toast.success("Beer added successfully");
+    } catch (error) {
+      const errorMessage =
+        (error as any).response?.data?.message || "Error adding beer";
+      toast.error(errorMessage);
     }
   };
 
