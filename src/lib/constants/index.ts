@@ -1,6 +1,6 @@
 import { Beer, Plus } from "lucide-react";
 
-export const sidebarLinks = [
+export const menuLinks = [
   {
     icon: Beer,
     route: "/",
