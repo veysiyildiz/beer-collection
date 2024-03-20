@@ -28,7 +28,6 @@ I used the following documents during coding:
 - [react-loading-skeleton on npm](https://www.npmjs.com/package/react-loading-skeleton)
 
 ## App Structure
-- `.env.local`
 - `db.json`
 - `public`
     - `default_beer.png`
@@ -39,7 +38,6 @@ I used the following documents during coding:
     - `manifest.json`
 - `src`
     - `app`
-        - `_error.tsx`
         - `actions`
             - `getBeerDetail.ts`
             - `getBeers.ts`
@@ -60,6 +58,7 @@ I used the following documents during coding:
                     - `route.ts`
         - `beer`
             - `[[id]]`
+                - `loading.tsx`
                 - `page.tsx`
         - `favicon.ico`
         - `globals.css`
@@ -75,7 +74,6 @@ I used the following documents during coding:
             - `Rating.tsx`
             - `Select.tsx`
             - `SortButtons.tsx`
-            - `Spinner.tsx`
             - `Text.tsx`
             - `Textarea.tsx`
             - `index.tsx`
@@ -83,12 +81,15 @@ I used the following documents during coding:
             - `BeerCard.tsx`
             - `BeerCardSkeleton.tsx`
             - `Comment.tsx`
+            - `CommentSkeleton.tsx`
             - `MenuItem.tsx`
             - `Properties.tsx`
             - `Search.tsx`
+            - `SubmitButton.tsx`
             - `index.tsx`
         - `organisms`
             - `BeerDetail.tsx`
+            - `BeerDetailSkeleton.tsx`
             - `BeerForm.tsx`
             - `BeerList.tsx`
             - `BeerListLoading.tsx`
@@ -96,14 +97,18 @@ I used the following documents during coding:
             - `CommentForm.tsx`
             - `CommentsWrapper.tsx`
             - `Filters.tsx`
+            - `FormField.tsx`
             - `LeftSideBar.tsx`
+            - `LoadMoreButton.tsx`
             - `TopBar.tsx`
             - `index.tsx`
-    - `interfaces`
+    - `types`
         - `index.ts`
     - `lib`
-        - `constants`
-            - `index.ts`
+        - `hooks`
+            - `useSearchAndSelect.ts`
+        - `constants.ts`
+        - `utils.ts`
 
 ## Installation
 To install and run the Beer Collection App, follow these steps:
