@@ -1,20 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Beer } from "@/interfaces";
-import fs from "fs";
+import { Beer } from "@/types";
+import fs from "fs/promises";
 import path from "path";
 
-interface DBObject {
+type DBObject = {
   beers: Beer[];
-}
+};
+
+const dbPath = path.join(process.cwd(), "db.json");
+
+const readDB = async (): Promise<DBObject> => {
+  const dbContents = await fs.readFile(dbPath, "utf8");
+  return JSON.parse(dbContents);
+};
+
+const writeDB = async (dbObject: DBObject): Promise<void> => {
+  await fs.writeFile(dbPath, JSON.stringify(dbObject, null, 2));
+};
 
 export async function POST(
   request: NextRequest
 ): Promise<NextResponse<Beer | { message: string }>> {
   try {
-    const dbPath = path.join(process.cwd(), "db.json");
-    const dbContents = fs.readFileSync(dbPath, "utf8");
-
-    let dbObject: DBObject = JSON.parse(dbContents);
+    const dbObject = await readDB();
 
     const data = await request.json();
 
@@ -24,14 +32,12 @@ export async function POST(
 
     dbObject.beers.push(newBeer);
 
-    fs.writeFileSync(dbPath, JSON.stringify(dbObject, null, 2));
+    await writeDB(dbObject);
 
     return NextResponse.json(newBeer);
   } catch (error) {
-    if (error instanceof Error) {
-      return new NextResponse(error.message, { status: 500 });
-    } else {
-      return new NextResponse("An unknown error occurred", { status: 500 });
-    }
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    return new NextResponse(errorMessage, { status: 500 });
   }
 }

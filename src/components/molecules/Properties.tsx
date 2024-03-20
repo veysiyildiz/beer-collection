@@ -1,11 +1,11 @@
 import React from "react";
 import { Text } from "@/components/atoms";
 
-interface PropertiesProps {
+type PropertiesProps = {
   name?: string;
   value?: string;
   className?: string;
-}
+};
 
 const Properties: React.FC<PropertiesProps> = ({ name, value, className }) => {
   return (

@@ -1,22 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Comment } from "@/interfaces";
-import fs from "fs";
+import { Comment } from "@/types";
+import fs from "fs/promises";
 import path from "path";
 
-interface DBObject {
+type DBObject = {
   comments: Comment[];
-}
+};
+
+const dbPath = path.join(process.cwd(), "db.json");
+
+const readDB = async (): Promise<DBObject> => {
+  const dbContents = await fs.readFile(dbPath, "utf8");
+  return JSON.parse(dbContents);
+};
+
+const writeDB = async (dbObject: DBObject): Promise<void> => {
+  await fs.writeFile(dbPath, JSON.stringify(dbObject, null, 2));
+};
 
 export async function GET(
   request: NextRequest,
   context: any
 ): Promise<NextResponse<Comment[] | { message: string }>> {
   try {
-    const dbPath = path.join(process.cwd(), "db.json");
-    const dbContents = fs.readFileSync(dbPath, "utf8");
-
-    const { comments }: DBObject = JSON.parse(dbContents);
-
+    const { comments } = await readDB();
     const { params } = context;
 
     return NextResponse.json(
@@ -25,11 +32,9 @@ export async function GET(
       )
     );
   } catch (error) {
-    if (error instanceof Error) {
-      return new NextResponse(error.message, { status: 500 });
-    } else {
-      return new NextResponse("An unknown error occurred", { status: 500 });
-    }
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    return new NextResponse(errorMessage, { status: 500 });
   }
 }
 
@@ -38,12 +43,7 @@ export async function POST(
   context: any
 ): Promise<NextResponse<Comment | { message: string }>> {
   try {
-    const dbPath = path.join(process.cwd(), "db.json");
-    const dbContents = fs.readFileSync(dbPath, "utf8");
-
-    let dbObject: DBObject = JSON.parse(dbContents);
-    const { params } = context;
-
+    const dbObject = await readDB();
     const data = await request.json();
 
     const newComment: Comment = {
@@ -52,14 +52,12 @@ export async function POST(
 
     dbObject.comments.push(newComment);
 
-    fs.writeFileSync(dbPath, JSON.stringify(dbObject, null, 2));
+    await writeDB(dbObject);
 
     return NextResponse.json(newComment);
   } catch (error) {
-    if (error instanceof Error) {
-      return new NextResponse(error.message, { status: 500 });
-    } else {
-      return new NextResponse("An unknown error occurred", { status: 500 });
-    }
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    return new NextResponse(errorMessage, { status: 500 });
   }
 }

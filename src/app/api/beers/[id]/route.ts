@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Beer } from "@/interfaces";
-import fs from "fs";
+import { Beer } from "@/types";
+import fs from "fs/promises";
 import path from "path";
 
-interface DBObject {
+type DBObject = {
   beers: Beer[];
-}
+};
+
+const findBeer = (beers: Beer[], id: string): Beer | undefined => {
+  return beers.find((beer: Beer) => beer.id === id);
+};
 
 export async function GET(
   request: NextRequest,
@@ -13,13 +17,13 @@ export async function GET(
 ): Promise<NextResponse<Beer | { message: string }>> {
   try {
     const dbPath = path.join(process.cwd(), "db.json");
-    const dbContents = fs.readFileSync(dbPath, "utf8");
+    const dbContents = await fs.readFile(dbPath, "utf8");
 
     const { beers }: DBObject = JSON.parse(dbContents);
 
     const { params } = context;
 
-    const beer = beers.find((beer: Beer) => beer.id === params.id.toString());
+    const beer = findBeer(beers, params.id.toString());
 
     if (!beer) {
       return new NextResponse(null, { status: 404 });
@@ -27,10 +31,8 @@ export async function GET(
 
     return NextResponse.json(beer);
   } catch (error) {
-    if (error instanceof Error) {
-      return new NextResponse(error.message, { status: 500 });
-    } else {
-      return new NextResponse("An unknown error occurred", { status: 500 });
-    }
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    return new NextResponse(errorMessage, { status: 500 });
   }
 }

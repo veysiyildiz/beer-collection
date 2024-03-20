@@ -4,9 +4,9 @@ import React, { ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 import { Button } from "@/components/atoms";
 
-interface SubmitButtonProps {
+type SubmitButtonProps = {
   children: ReactNode;
-}
+};
 
 const SubmitButton: React.FC<SubmitButtonProps> = ({ children }) => {
   const { pending } = useFormStatus();

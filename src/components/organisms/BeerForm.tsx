@@ -6,8 +6,8 @@ import { addBeer } from "@/app/actions/getBeers";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Input, Label, TextArea, ErrorMessage } from "@/components/atoms";
-import { Beer } from "@/interfaces";
+import { FormField } from "@/components/organisms";
+import { Beer } from "@/types";
 import { SubmitButton } from "@/components/molecules";
 
 const schema = z.object({
@@ -35,7 +35,6 @@ type FormType = Omit<Beer, "food_pairing"> & { food_pairing: string };
 const BeerForm: React.FC = () => {
   const {
     register,
-    handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<FormType>({
@@ -59,6 +58,7 @@ const BeerForm: React.FC = () => {
       food_pairing: data.food_pairing.toString().split("\n"),
       averageRating: 0,
     };
+
     try {
       const response = await addBeer(beer);
       toast.success("Beer added successfully");
@@ -73,70 +73,67 @@ const BeerForm: React.FC = () => {
     <form action={addBeerClientAction} className="w-full max-w-lg p-4 mx-auto">
       <input type="hidden" {...register("id")} value={Date.now().toString()} />
       <input type="hidden" {...register("image_url")} value={defaultImageUrl} />
-      <Label text="Name" htmlFor="name" />
-      <Input
+
+      <FormField
         id="name"
-        {...register("name", { required: true })}
+        register={register}
+        errors={errors}
+        label="Name"
         placeholder="Beer Name"
       />
-      <ErrorMessage message={errors.name?.message} />
-
-      <Label text="Tagline" htmlFor="tagline" />
-      <Input
+      <FormField
         id="tagline"
-        {...register("tagline", { required: true })}
+        register={register}
+        errors={errors}
+        label="Tagline"
         placeholder="Tagline"
       />
-      <ErrorMessage message={errors.tagline?.message} />
-
-      <Label text="Alcohol By Volume" htmlFor="abv" />
-      <Input
+      <FormField
         id="abv"
-        type="number"
-        {...register("abv", { required: true })}
+        register={register}
+        errors={errors}
+        label="Alcohol By Volume"
         placeholder="abv"
+        type="number"
       />
-      <ErrorMessage message={errors.abv?.message} />
-
-      <Label text="First Brewed" htmlFor="first_brewed" />
-      <Input
+      <FormField
         id="first_brewed"
-        {...register("first_brewed", { required: true })}
+        register={register}
+        errors={errors}
+        label="First Brewed"
         placeholder="YYYY-MM"
       />
-      <ErrorMessage message={errors.first_brewed?.message} />
-
-      <Label text="Description" htmlFor="description" />
-      <TextArea
+      <FormField
         id="description"
-        {...register("description")}
+        register={register}
+        errors={errors}
+        label="Description"
         placeholder="Enter description"
+        isTextArea
       />
-      <ErrorMessage message={errors.description?.message} />
-
-      <Label text="Food Pairing" htmlFor="food_pairing" />
-      <TextArea
+      <FormField
         id="food_pairing"
-        {...register("food_pairing")}
+        register={register}
+        errors={errors}
+        label="Food Pairing"
         placeholder="Enter food pairing, one per line"
+        isTextArea
       />
-      <ErrorMessage message={errors.food_pairing?.message} />
-
-      <Label text="Brewers Tips" htmlFor="brewers_tips" />
-      <TextArea
+      <FormField
         id="brewers_tips"
-        {...register("brewers_tips")}
+        register={register}
+        errors={errors}
+        label="Brewers Tips"
         placeholder="Enter brewers tips"
+        isTextArea
       />
-      <ErrorMessage message={errors.brewers_tips?.message} />
-
-      <Label text="Contributed By" htmlFor="contributed_by" />
-      <Input
+      <FormField
         id="contributed_by"
-        {...register("contributed_by", { required: true })}
+        register={register}
+        errors={errors}
+        label="Contributed By"
         placeholder="Contributed By"
       />
-      <ErrorMessage message={errors.contributed_by?.message} />
 
       <SubmitButton>Add Beer</SubmitButton>
     </form>

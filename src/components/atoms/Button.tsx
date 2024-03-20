@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-interface ButtonProps {
+type ButtonProps = {
   children: React.ReactNode;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
@@ -11,7 +11,7 @@ interface ButtonProps {
   ariaLabel?: string;
   href?: string;
   disabled?: boolean;
-}
+};
 
 const Button: React.FC<ButtonProps> = ({
   children,

@@ -1,10 +1,10 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-interface ErrorMessageProps {
+type ErrorMessageProps = {
   message?: string;
   className?: string;
-}
+};
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, className }) => {
   if (!message) {

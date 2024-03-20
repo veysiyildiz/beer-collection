@@ -6,13 +6,13 @@ import { rateTheBeer } from "@/app/actions/getBeerDetail";
 import { Star } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
-interface RatingProps {
+type RatingProps = {
   rating: number;
   className?: string;
   beerId: string;
   clickable?: boolean;
   children?: React.ReactNode;
-}
+};
 
 const Rating: React.FC<RatingProps> = ({
   rating = 5,

@@ -1,7 +1,7 @@
 "use server";
 
 import { API_URL } from "@/lib/constants";
-import { Beer, Comment, Status } from "@/interfaces";
+import { Beer, Comment, Status } from "@/types";
 import { revalidatePath } from "next/cache";
 
 export async function getAllBeers() {

@@ -1,12 +1,12 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-interface LabelProps {
+type LabelProps = {
   text?: string;
   htmlFor?: string;
   children?: React.ReactNode;
   className?: string;
-}
+};
 
 const Label: React.FC<LabelProps> = ({
   text,

@@ -1,23 +1,23 @@
 "use server";
 
-import { API_URL, DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "@/lib/constants";
-import { Beer, Status } from "@/interfaces";
+import {
+  API_URL,
+  DEFAULT_PAGE,
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_SORT_ORDER,
+} from "@/lib/constants";
+import { Beer, Status } from "@/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { SearchParams } from "@/types";
 
 export async function getBeers({
-  page = Number(DEFAULT_PAGE),
-  limit = Number(DEFAULT_PAGE_SIZE),
+  page = DEFAULT_PAGE,
+  limit = DEFAULT_PAGE_SIZE,
   searchTerm = "",
   sortOption = "name",
-  _order = "asc",
-}: {
-  page: number;
-  limit: number;
-  searchTerm: string;
-  sortOption: string;
-  _order: string;
-}) {
+  _order = DEFAULT_SORT_ORDER,
+}: SearchParams) {
   let data = null;
   try {
     const res = await fetch(

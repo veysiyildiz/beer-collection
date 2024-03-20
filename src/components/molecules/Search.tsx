@@ -17,7 +17,7 @@ const Search: React.FC = () => {
           placeholder="Search Beers by Name"
           className="block w-full pl-10 mt-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm rounded-md"
           onChange={handleSearchChange}
-          value={searchTerm}
+          value={searchTerm || ""}
         />
         <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
       </div>

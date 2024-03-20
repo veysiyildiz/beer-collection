@@ -1,7 +1,7 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-interface InputProps {
+type InputProps = {
   placeholder?: string;
   className?: string;
   hidden?: boolean;
@@ -9,7 +9,7 @@ interface InputProps {
   id?: string;
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+};
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (

@@ -5,12 +5,12 @@ import { rateTheBeer } from "@/app/actions/getBeerDetail";
 import Skeleton from "react-loading-skeleton";
 import { Text, Rating } from "@/components/atoms";
 import { Properties } from "@/components/molecules";
-import { Beer, Comment } from "@/interfaces";
+import { Beer, Comment } from "@/types";
 import Image from "next/image";
 
-interface BeerDetailProps {
+type BeerDetailProps = {
   beer: Beer;
-}
+};
 
 const BeerDetail: React.FC<BeerDetailProps> = ({ beer }) => {
   return (

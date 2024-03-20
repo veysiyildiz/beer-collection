@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { ErrorMessage } from "@/components/atoms";
 import { BeerDetail, CommentsWrapper } from "@/components/organisms";
 import { getBeerById, getCommentsByBeerId } from "@/app/actions/getBeerDetail";
-import { Beer } from "@/interfaces";
+import { Beer } from "@/types";
 
-interface Params {
+type Params = {
   params: {
     id: string;
   };
-}
+};
 
 export default async function DetailPage({ params }: Params) {
   if (!params.id) {

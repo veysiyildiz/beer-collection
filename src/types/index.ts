@@ -1,6 +1,6 @@
 export type Status = "loading" | "success" | "failed";
 
-export interface Beer {
+export type Beer = {
   id: string;
   abv: number;
   name: string;
@@ -12,21 +12,29 @@ export interface Beer {
   brewers_tips: string;
   contributed_by: string;
   averageRating?: number;
-}
+};
 
-export interface BeerData {
+export type BeerData = {
   total: number;
   beers: Beer[];
-}
+};
 
-export interface Comment {
+export type Comment = {
   id?: string;
   beerId: string;
   text: string;
-}
+};
 
-export interface Rating {
+export type Rating = {
   id?: string;
   beerId: string;
   rating: string;
-}
+};
+
+export type SearchParams = {
+  searchTerm?: string;
+  sortOption?: string;
+  _order?: string;
+  page?: string;
+  limit?: string;
+};

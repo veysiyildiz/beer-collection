@@ -1,11 +1,11 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-interface TextAreaProps {
+type TextAreaProps = {
   placeholder: string;
   className?: string;
   id?: string;
-}
+};
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   ({ placeholder, className, id, ...props }, ref) => {

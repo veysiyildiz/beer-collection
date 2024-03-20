@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button, Label, TextArea, ErrorMessage } from "@/components/atoms";
-import { Comment } from "@/interfaces";
+import { Comment } from "@/types";
 import SubmitButton from "../molecules/SubmitButton";
 import toast from "react-hot-toast";
 
@@ -16,22 +16,16 @@ const schema = z.object({
   id: z.string().nonempty({ message: "ID is required" }),
 });
 
-interface CommentProps {
-  text: string;
+type CommentFormProps = {
   beerId: string;
-  id: string;
-}
-
-interface CommentFormProps {
-  beerId: string;
-}
+};
 
 const CommentForm: React.FC<CommentFormProps> = ({ beerId }) => {
   const {
     register,
     formState: { errors },
     reset,
-  } = useForm<CommentProps>({
+  } = useForm<Comment>({
     resolver: zodResolver(schema),
     defaultValues: {
       beerId,

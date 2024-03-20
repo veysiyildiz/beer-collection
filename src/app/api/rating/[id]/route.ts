@@ -1,12 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Rating, Beer } from "@/interfaces";
-import fs from "fs";
+import { Rating, Beer } from "@/types";
+import fs from "fs/promises";
 import path from "path";
 
-interface DBObject {
+type DBObject = {
   ratings: Rating[];
   beers: Beer[];
-}
+};
+
+const calculateAverageRating = (ratings: Rating[]): number => {
+  const totalRating = ratings.reduce(
+    (total: number, rating: Rating) => total + Number(rating.rating),
+    0
+  );
+  return totalRating / ratings.length;
+};
 
 export async function POST(
   request: NextRequest,
@@ -14,7 +22,7 @@ export async function POST(
 ): Promise<NextResponse<Rating | { message: string }>> {
   try {
     const dbPath = path.join(process.cwd(), "db.json");
-    const dbContents = fs.readFileSync(dbPath, "utf8");
+    const dbContents = await fs.readFile(dbPath, "utf8");
 
     let dbObject: DBObject = JSON.parse(dbContents);
     const { params } = context;
@@ -37,15 +45,11 @@ export async function POST(
       const relatedRatings = dbObject.ratings.filter(
         (rating: Rating) => rating.beerId === newRating.beerId
       );
-      const totalRating = relatedRatings.reduce(
-        (total: number, rating: Rating) => total + Number(rating.rating),
-        0
-      );
-      beer.averageRating = totalRating / relatedRatings.length;
+      beer.averageRating = calculateAverageRating(relatedRatings);
       updatedBeer = beer;
     }
 
-    fs.writeFileSync(dbPath, JSON.stringify(dbObject, null, 2));
+    await fs.writeFile(dbPath, JSON.stringify(dbObject, null, 2));
 
     if (updatedBeer) {
       return NextResponse.json({
@@ -57,10 +61,8 @@ export async function POST(
       throw new Error("Beer not found");
     }
   } catch (error) {
-    if (error instanceof Error) {
-      return new NextResponse(error.message, { status: 500 });
-    } else {
-      return new NextResponse("An unknown error occurred", { status: 500 });
-    }
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    return new NextResponse(errorMessage, { status: 500 });
   }
 }

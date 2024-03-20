@@ -2,11 +2,11 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Text, Rating } from "@/components/atoms";
-import { Beer } from "@/interfaces";
+import { Beer } from "@/types";
 
-interface BeerCardProps {
+type BeerCardProps = {
   beer?: Beer | undefined;
-}
+};
 
 const BeerCard: React.FC<BeerCardProps> = React.memo(
   ({ beer }: BeerCardProps) => {

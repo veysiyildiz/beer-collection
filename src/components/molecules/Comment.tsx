@@ -1,11 +1,11 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { Text } from "@/components/atoms";
-import { Comment } from "@/interfaces";
+import { Comment } from "@/types";
 
-interface CommentsProps {
+type CommentsProps = {
   comments: any[];
-}
+};
 
 const Comments: React.FC<CommentsProps> = ({ comments }) => {
   return (

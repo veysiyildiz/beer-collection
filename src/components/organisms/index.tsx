@@ -9,6 +9,8 @@ import BeerDetail from "./BeerDetail";
 import BeerDetailSkeleton from "./BeerDetailSkeleton";
 import CommentForm from "./CommentForm";
 import CommentsWrapper from "./CommentsWrapper";
+import LoadMoreButton from "./LoadMoreButton";
+import FormField from "./FormField";
 
 export {
   TopBar,
@@ -22,4 +24,6 @@ export {
   BeerDetailSkeleton,
   CommentForm,
   CommentsWrapper,
+  LoadMoreButton,
+  FormField,
 };

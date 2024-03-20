@@ -1,11 +1,11 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-interface TextProps {
+type TextProps = {
   variant: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span";
   className?: string;
   children: React.ReactNode | string | number | undefined;
-}
+};
 
 const Text: React.FC<TextProps> = ({
   variant = "span",

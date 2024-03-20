@@ -1,8 +1,13 @@
 import React, { Suspense } from "react";
 import { Search } from "@/components/molecules";
 import { Select, SortButtons } from "@/components/atoms";
+import { SearchParams } from "@/types";
 
-const Filters: React.FC = () => {
+type FiltersProps = {
+  searchParams: SearchParams;
+};
+
+const Filters: React.FC<FiltersProps> = ({ searchParams }) => {
   return (
     <div className="sm:flex justify-between mb-4">
       <Suspense>
@@ -13,7 +18,7 @@ const Filters: React.FC = () => {
           <Select />
         </Suspense>
         <Suspense>
-          <SortButtons />
+          <SortButtons searchParams={searchParams} />
         </Suspense>
       </div>
     </div>
