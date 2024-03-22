@@ -15,7 +15,7 @@ export async function getBeers({
   page = DEFAULT_PAGE,
   limit = DEFAULT_PAGE_SIZE,
   searchTerm = "",
-  sortOption = "name",
+  sortOption = "",
   _order = DEFAULT_SORT_ORDER,
 }: SearchParams) {
   let data = null;

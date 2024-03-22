@@ -1,18 +1,17 @@
-import { z } from "zod";
 import { getBeers } from "@/app/actions/getBeers";
 import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
   DEFAULT_SORT_ORDER,
 } from "@/lib/constants";
-import { SearchParams } from "@/types";
+import { SearchParams, searchParamsSchema } from "@/types";
 
 export async function fetchBeers(searchParams: SearchParams) {
   const {
     page = DEFAULT_PAGE,
     limit = DEFAULT_PAGE_SIZE,
     searchTerm = "",
-    sortOption = "name",
+    sortOption = "",
     _order = DEFAULT_SORT_ORDER,
   } = searchParams;
 
@@ -33,14 +32,6 @@ export async function fetchBeers(searchParams: SearchParams) {
     return { status: "failed", error };
   }
 }
-
-export const searchParamsSchema = z.object({
-  page: z.string().default(DEFAULT_PAGE),
-  limit: z.string().default(DEFAULT_PAGE_SIZE),
-  searchTerm: z.string().default(""),
-  sortOption: z.enum(["", "abv", "first_brewed"]).default(""),
-  _order: z.enum(["asc", "desc"]).default(DEFAULT_SORT_ORDER),
-});
 
 export const correctSearchParams = (searchParams: SearchParams) => {
   const result = searchParamsSchema.safeParse(searchParams);

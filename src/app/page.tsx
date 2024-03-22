@@ -1,12 +1,8 @@
 import React, { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { BeerList, BeerListLoading, Filters } from "@/components/organisms";
-import {
-  correctSearchParams,
-  removeInvalidKeys,
-  searchParamsSchema,
-} from "@/lib/utils";
-import { SearchParams } from "@/types";
+import { correctSearchParams, removeInvalidKeys } from "@/lib/utils";
+import { SearchParams, searchParamsSchema } from "@/types";
 
 type HomePageProps = {
   searchParams: SearchParams;

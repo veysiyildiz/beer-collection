@@ -1,3 +1,10 @@
+import { z } from "zod";
+import {
+  DEFAULT_PAGE,
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_SORT_ORDER,
+} from "@/lib/constants";
+
 export type Status = "loading" | "success" | "failed";
 
 export type Beer = {
@@ -31,10 +38,12 @@ export type Rating = {
   rating: string;
 };
 
-export type SearchParams = {
-  searchTerm?: string;
-  sortOption?: string;
-  _order?: string;
-  page?: string;
-  limit?: string;
-};
+export const searchParamsSchema = z.object({
+  page: z.string().default(DEFAULT_PAGE),
+  limit: z.string().default(DEFAULT_PAGE_SIZE),
+  searchTerm: z.string().default(""),
+  sortOption: z.enum(["", "abv", "first_brewed"]).default(""),
+  _order: z.enum(["asc", "desc"]).default(DEFAULT_SORT_ORDER),
+});
+
+export type SearchParams = z.infer<typeof searchParamsSchema>;
