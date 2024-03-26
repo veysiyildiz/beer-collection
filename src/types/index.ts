@@ -43,7 +43,7 @@ export const searchParamsSchema = z.object({
   limit: z.string().default(DEFAULT_PAGE_SIZE),
   searchTerm: z.string().default(""),
   sortOption: z.enum(["", "abv", "first_brewed"]).default(""),
-  _order: z.enum(["asc", "desc"]).default(DEFAULT_SORT_ORDER),
+  order: z.enum(["asc", "desc"]).default(DEFAULT_SORT_ORDER),
 });
 
 export type SearchParams = z.infer<typeof searchParamsSchema>;

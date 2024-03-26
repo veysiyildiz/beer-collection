@@ -14,7 +14,7 @@ type SortButtonsProps = {
 
 const SortButtons: React.FC<SortButtonsProps> = ({ searchParams }) => {
   const { handleOrderChange } = useSearchAndSelect();
-  const sortOrder = searchParams._order || DEFAULT_SORT_ORDER;
+  const sortOrder = searchParams.order || DEFAULT_SORT_ORDER;
 
   return (
     <div className="flex">

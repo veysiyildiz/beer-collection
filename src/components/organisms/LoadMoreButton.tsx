@@ -6,21 +6,21 @@ type LoadMoreButtonProps = {
   isAllLoaded: boolean;
   searchTerm: string;
   sortOption: string;
-  _order: string;
+  order: string;
   page: string;
 };
 
 const generateNextPageUrl = ({
   searchTerm,
   sortOption,
-  _order,
+  order,
   page,
 }: LoadMoreButtonProps) => {
   const nextPage = +page + 1;
   const params = new URLSearchParams({
     searchTerm,
     sortOption,
-    _order,
+    order,
     page: nextPage.toString(),
   });
   return `?${params.toString()}`;

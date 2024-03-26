@@ -16,12 +16,12 @@ export async function getBeers({
   limit = DEFAULT_PAGE_SIZE,
   searchTerm = "",
   sortOption = "",
-  _order = DEFAULT_SORT_ORDER,
+  order = DEFAULT_SORT_ORDER,
 }: SearchParams) {
   let data = null;
   try {
     const res = await fetch(
-      `${API_URL}api/beers?page=${page}&limit=${limit}&searchTerm=${searchTerm}&sortOption=${sortOption}&_order=${_order}`
+      `${API_URL}api/beers?page=${page}&limit=${limit}&searchTerm=${searchTerm}&sortOption=${sortOption}&order=${order}`
     );
     if (!res.ok) {
       throw new Error("Failed to fetch data");

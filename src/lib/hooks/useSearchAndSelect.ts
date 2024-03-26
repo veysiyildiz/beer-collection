@@ -20,14 +20,14 @@ export const useSearchAndSelect = () => {
   const initialSortOption = searchParams.has("sortOption")
     ? searchParams.get("sortOption")
     : "";
-  const initialOrder = searchParams.has("_order")
-    ? searchParams.get("_order")
+  const initialOrder = searchParams.has("order")
+    ? searchParams.get("order")
     : DEFAULT_SORT_ORDER;
 
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedSortOption, setSelectedSortOption] =
     useState(initialSortOption);
-  const [_order, setOrder] = useState(initialOrder);
+  const [order, setOrder] = useState(initialOrder);
 
   const debouncedSearchChange = useRef(
     debounce((newSearchParams) => {
@@ -53,7 +53,7 @@ export const useSearchAndSelect = () => {
   const handleOrderChange = (newOrder: string) => {
     setOrder(newOrder);
     const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set("_order", newOrder);
+    newSearchParams.set("order", newOrder);
     router.push(`${pathname}?${newSearchParams.toString()}`);
   };
 
@@ -68,7 +68,7 @@ export const useSearchAndSelect = () => {
   return {
     searchTerm,
     selectedSortOption,
-    _order,
+    order,
     handleSearchChange,
     handleSelectChange,
     handleOrderChange,

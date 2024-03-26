@@ -21,7 +21,7 @@ const BeerList: React.FC<BeerListProps> = async ({ searchParams }) => {
     limit = DEFAULT_PAGE_SIZE,
     searchTerm = "",
     sortOption = "name",
-    _order = DEFAULT_SORT_ORDER,
+    order = DEFAULT_SORT_ORDER,
   } = searchParams;
   const { data, status, error } = await fetchBeers(searchParams);
   const beers = data?.beers || [];
@@ -43,7 +43,7 @@ const BeerList: React.FC<BeerListProps> = async ({ searchParams }) => {
         isAllLoaded={beers?.length === total}
         searchTerm={searchTerm}
         sortOption={sortOption}
-        _order={_order}
+        order={order}
         page={page}
       />
     </>

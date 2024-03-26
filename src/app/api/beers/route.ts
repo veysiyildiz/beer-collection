@@ -20,11 +20,11 @@ const filterBeers = (beers: Beer[], searchTerm: string): Beer[] => {
 const sortBeers = (
   beers: Beer[],
   sortOption: string,
-  _order: string
+  order: string
 ): Beer[] => {
   if (!sortOption) return beers;
   return beers.sort((a, b) => {
-    if (_order === "desc") {
+    if (order === "desc") {
       return (b[sortOption as keyof Beer] as any) >
         (a[sortOption as keyof Beer] as any)
         ? 1
@@ -60,10 +60,10 @@ export async function GET(
     const limit = searchParams.get("limit") || DEFAULT_PAGE_SIZE;
     const searchTerm = searchParams.get("searchTerm") || "";
     const sortOption = searchParams.get("sortOption") || "name";
-    const _order = searchParams.get("_order") || DEFAULT_SORT_ORDER;
+    const order = searchParams.get("order") || DEFAULT_SORT_ORDER;
 
     beers = filterBeers(beers, searchTerm);
-    beers = sortBeers(beers, sortOption, _order);
+    beers = sortBeers(beers, sortOption, order);
     const total = beers.length;
     const paginatedBeers = paginateBeers(beers, page, limit);
 

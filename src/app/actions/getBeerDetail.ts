@@ -8,7 +8,7 @@ export async function getAllBeers() {
   let data = null;
   try {
     const res = await fetch(
-      `${API_URL}api/beers?page=0&limit=0&searchTerm=&sortOption=&_order=desc`
+      `${API_URL}api/beers?page=0&limit=0&searchTerm=&sortOption=&order=desc`
     );
     if (!res.ok) {
       throw new Error("Failed to fetch data");

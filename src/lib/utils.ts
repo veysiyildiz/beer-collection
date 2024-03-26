@@ -12,7 +12,7 @@ export async function fetchBeers(searchParams: SearchParams) {
     limit = DEFAULT_PAGE_SIZE,
     searchTerm = "",
     sortOption = "",
-    _order = DEFAULT_SORT_ORDER,
+    order = DEFAULT_SORT_ORDER,
   } = searchParams;
 
   try {
@@ -22,7 +22,7 @@ export async function fetchBeers(searchParams: SearchParams) {
       limit,
       searchTerm,
       sortOption,
-      _order,
+      order,
     });
 
     return { status: "success", data: response?.data };
