@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { rateTheBeer } from "@/app/actions/getBeerDetail";
+import { rateBeer } from "@/app/actions";
 import { Star } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
@@ -29,7 +29,7 @@ const Rating: React.FC<RatingProps> = ({
     if (clickable) {
       try {
         const rating = value;
-        const { data } = await rateTheBeer(beerId, rating);
+        const { data } = await rateBeer(beerId, rating);
         const beer = data.beer;
         setRatingValue(beer.averageRating);
         toast.success("Rating updated successfully");

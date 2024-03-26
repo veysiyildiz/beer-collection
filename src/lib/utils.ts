@@ -1,4 +1,4 @@
-import { getBeers } from "@/app/actions/getBeers";
+import { getBeers } from "@/app/actions";
 import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,

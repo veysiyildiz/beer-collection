@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { rateTheBeer } from "@/app/actions/getBeerDetail";
+import { rateBeer } from "@/app/actions";
 import Skeleton from "react-loading-skeleton";
 import { Text, Rating } from "@/components/atoms";
 import { Properties } from "@/components/molecules";

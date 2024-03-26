@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ErrorMessage } from "@/components/atoms";
 import { BeerDetail, CommentsWrapper } from "@/components/organisms";
-import { getBeerById, getCommentsByBeerId } from "@/app/actions/getBeerDetail";
+import { getBeerById, getCommentsByBeerId } from "@/app/actions";
 import { Beer } from "@/types";
 
 type Params = {

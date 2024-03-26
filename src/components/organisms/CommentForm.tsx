@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback } from "react";
-import { addComment } from "@/app/actions/getBeerDetail";
+import { addComment } from "@/app/actions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";

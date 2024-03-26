@@ -2,7 +2,7 @@
 
 import React from "react";
 import { toast } from "react-hot-toast";
-import { addBeer } from "@/app/actions/getBeers";
+import { addBeer } from "@/app/actions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";

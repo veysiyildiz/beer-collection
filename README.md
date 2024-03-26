@@ -7,10 +7,10 @@ You can view a live demo of the Beer Collection App at [Demo Link](https://beer-
 This is the Beer Collection App. It's built with NextJS ❤️, server-side rendering first . You can add beers to your collection. You can also give beers a rating and leave comments.
 
 ## Data Source
-The information about the beers is stored in a `db.json` file in the main folder of the project. The reason I have used a JSON file instead of utilizing a pre-existing API is to showcase my backend development skills and also show how I use NextJS API Routes and server actions. The second reason is to be able add comments and ratings to the beers and also showcase my ability to manipulate data and simulate a database environment. I have created db.json from `https://api.punkapi.com/v2/beers` endpoint deleted lots of info there and added a comments and a ratings array also to emulate a flat database structure.
+The beer details are kept in a file called `db.json` in the project's main folder. Instead of using an existing API, I chose to use this file to show how I handle backend tasks and use Next.js features like API Routes. I also added the ability to leave comments and ratings for the beers, to demonstrate how I work with data and create a database-like setup. I filled the db.json file by taking some information from the `https://api.punkapi.com/v2/beers` website and modifying it. I added delays to make it look like the app is loading, and I used both Suspense and `loading.tsx` to demonstrate different loading methods, even though it's not the best practice. Similarly, I included both API routes and actions to show different approaches, but in a real project, it might be better to stick with just one method for consistency.
 
 ## Loading and Filtering States
-I have used `react-loading-skeleton` to show a loading state as a placeholder until the data is ready, and added 500ms delay to APIs to see the loading state. I also added filter states and search term to searchParams as a better practice for user experience. A user can share a search/filter result page url or bookmark it to see the same results in somewhere else.
+I have used `react-loading-skeleton` to show a loading state as a placeholder until the data is ready, and added 500ms delay to APIs to see the loading state. I also added filter states and search term to searchParams and validation via `zod` as a better practice for user experience. A user can share a search/filter result page url or bookmark it to see the same results in somewhere else.
 
 ## Forms
 The forms in the app using `react-hook-form` and `zod`. It's awesome for managing the form data and validation.
@@ -39,8 +39,14 @@ I used the following documents during coding:
 - `src`
     - `app`
         - `actions`
-            - `getBeerDetail.ts`
+            - `addBeer.ts`
+            - `addComment.ts`
+            - `getAllBeers.ts`
+            - `getBeerById.ts`
             - `getBeers.ts`
+            - `getCommentsByBeerId.ts`
+            - `index.ts`
+            - `rateBeer.ts`
         - `add-beer`
             - `page.tsx`
         - `api`
