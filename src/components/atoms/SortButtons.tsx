@@ -1,11 +1,8 @@
-"use client";
-
 import React from "react";
+import Link from "next/link";
 import { ArrowDownAZ, ArrowDownZA } from "lucide-react";
 import { twMerge } from "tailwind-merge";
-import { DEFAULT_SORT_ORDER } from "@/lib/constants";
-import { Button } from "@/components/atoms";
-import { useSearchAndSelect } from "@/lib/hooks/useSearchAndSelect";
+import { getSearchParams } from "@/lib/utils";
 import { SearchParams } from "@/types";
 
 type SortButtonsProps = {
@@ -13,31 +10,33 @@ type SortButtonsProps = {
 };
 
 const SortButtons: React.FC<SortButtonsProps> = ({ searchParams }) => {
-  const { handleOrderChange } = useSearchAndSelect();
-  const sortOrder = searchParams.order || DEFAULT_SORT_ORDER;
+  const params = getSearchParams(searchParams);
+
+  const generateSortParams = (newOrder: string) => {
+    const newParams = new URLSearchParams({ ...params, order: newOrder });
+    return `?${newParams.toString()}`;
+  };
+
+  const orders = [
+    { order: "asc", Icon: ArrowDownAZ },
+    { order: "desc", Icon: ArrowDownZA },
+  ];
 
   return (
     <div className="flex">
-      <Button
-        className={twMerge(
-          `flex items-center text-gray-500 border-none mr-2 ${
-            sortOrder === "asc" ? "text-blue-500" : "text-gray-500"
-          }`
-        )}
-        onClick={() => handleOrderChange("asc")}
-      >
-        <ArrowDownAZ />
-      </Button>
-      <Button
-        className={twMerge(
-          `flex items-center text-gray-500 border-none mr-2 ${
-            sortOrder === "desc" ? "text-blue-500" : "text-gray-500"
-          }`
-        )}
-        onClick={() => handleOrderChange("desc")}
-      >
-        <ArrowDownZA />
-      </Button>
+      {orders.map(({ order, Icon }) => (
+        <Link
+          key={order}
+          className={twMerge(
+            `flex items-center text-gray-500 border-none m-2 ${
+              params.order === order ? "text-blue-500" : "text-gray-500"
+            }`
+          )}
+          href={generateSortParams(order)}
+        >
+          <Icon />
+        </Link>
+      ))}
     </div>
   );
 };

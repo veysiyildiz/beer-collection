@@ -1,25 +1,25 @@
 import { getBeers } from "@/app/actions";
-import {
-  DEFAULT_PAGE,
-  DEFAULT_PAGE_SIZE,
-  DEFAULT_SORT_ORDER,
-} from "@/lib/constants";
+import { DEFAULT_PAGE, DEFAULT_SORT_ORDER } from "@/lib/constants";
 import { SearchParams, searchParamsSchema } from "@/types";
 
-export async function fetchBeers(searchParams: SearchParams) {
+export const getSearchParams = (searchParams: SearchParams) => {
   const {
     page = DEFAULT_PAGE,
-    limit = DEFAULT_PAGE_SIZE,
     searchTerm = "",
     sortOption = "",
     order = DEFAULT_SORT_ORDER,
   } = searchParams;
 
+  return { page, searchTerm, sortOption, order };
+};
+
+export async function fetchBeers(searchParams: SearchParams) {
+  const { page, searchTerm, sortOption, order } = getSearchParams(searchParams);
+
   try {
     await new Promise((resolve) => setTimeout(resolve, 500));
     const response = await getBeers({
       page,
-      limit,
       searchTerm,
       sortOption,
       order,

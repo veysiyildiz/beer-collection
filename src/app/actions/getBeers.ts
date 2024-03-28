@@ -1,24 +1,16 @@
 "use server";
 
-import {
-  API_URL,
-  DEFAULT_PAGE,
-  DEFAULT_PAGE_SIZE,
-  DEFAULT_SORT_ORDER,
-} from "@/lib/constants";
+import { API_URL, DEFAULT_PAGE_SIZE } from "@/lib/constants";
+import { getSearchParams } from "@/lib/utils";
 import { SearchParams } from "@/types";
 
-export default async function getBeers({
-  page = DEFAULT_PAGE,
-  limit = DEFAULT_PAGE_SIZE,
-  searchTerm = "",
-  sortOption = "",
-  order = DEFAULT_SORT_ORDER,
-}: SearchParams) {
+export default async function getBeers(searchParams: SearchParams) {
+  const { page, searchTerm, sortOption, order } = getSearchParams(searchParams);
   let data = null;
+
   try {
     const res = await fetch(
-      `${API_URL}api/beers?page=${page}&limit=${limit}&searchTerm=${searchTerm}&sortOption=${sortOption}&order=${order}`
+      `${API_URL}api/beers?page=${page}&limit=${DEFAULT_PAGE_SIZE}&searchTerm=${searchTerm}&sortOption=${sortOption}&order=${order}`
     );
     if (!res.ok) {
       throw new Error("Failed to fetch data");

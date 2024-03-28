@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  DEFAULT_PAGE,
-  DEFAULT_PAGE_SIZE,
-  DEFAULT_SORT_ORDER,
-} from "@/lib/constants";
+import { DEFAULT_PAGE, DEFAULT_SORT_ORDER } from "@/lib/constants";
 
 export type Status = "loading" | "success" | "failed";
 
@@ -40,7 +36,6 @@ export type Rating = {
 
 export const searchParamsSchema = z.object({
   page: z.string().default(DEFAULT_PAGE),
-  limit: z.string().default(DEFAULT_PAGE_SIZE),
   searchTerm: z.string().default(""),
   sortOption: z.enum(["", "abv", "first_brewed"]).default(""),
   order: z.enum(["asc", "desc"]).default(DEFAULT_SORT_ORDER),

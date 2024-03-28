@@ -13,6 +13,12 @@ export const menuLinks = [
   },
 ];
 
+export const sortOptions = [
+  { value: "", text: "Sort" },
+  { value: "abv", text: "Alcohol By Volume" },
+  { value: "first_brewed", text: "First Brewed" },
+];
+
 export const API_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/";
 

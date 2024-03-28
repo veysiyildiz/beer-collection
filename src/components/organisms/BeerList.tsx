@@ -1,11 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { fetchBeers } from "@/lib/utils";
-import {
-  DEFAULT_PAGE,
-  DEFAULT_PAGE_SIZE,
-  DEFAULT_SORT_ORDER,
-} from "@/lib/constants";
+import { fetchBeers, getSearchParams } from "@/lib/utils";
 import { BeerListLoading, LoadMoreButton } from "@/components/organisms";
 import { Button, ErrorMessage } from "@/components/atoms";
 import { BeerCard } from "@/components/molecules";
@@ -16,14 +11,8 @@ type BeerListProps = {
 };
 
 const BeerList: React.FC<BeerListProps> = async ({ searchParams }) => {
-  const {
-    page = DEFAULT_PAGE,
-    limit = DEFAULT_PAGE_SIZE,
-    searchTerm = "",
-    sortOption = "name",
-    order = DEFAULT_SORT_ORDER,
-  } = searchParams;
-  const { data, status, error } = await fetchBeers(searchParams);
+  const params = getSearchParams(searchParams);
+  const { data, status, error } = await fetchBeers(params);
   const beers = data?.beers || [];
   const total = data?.total || 0;
 
@@ -41,10 +30,7 @@ const BeerList: React.FC<BeerListProps> = async ({ searchParams }) => {
       <BeerListComponent beers={beers} />
       <LoadMoreButton
         isAllLoaded={beers?.length === total}
-        searchTerm={searchTerm}
-        sortOption={sortOption}
-        order={order}
-        page={page}
+        searchParams={params}
       />
     </>
   );

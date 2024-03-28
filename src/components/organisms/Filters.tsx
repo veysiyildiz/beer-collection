@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { Search } from "@/components/molecules";
 import { Select, SortButtons } from "@/components/atoms";
 import { SearchParams } from "@/types";
@@ -10,16 +10,10 @@ type FiltersProps = {
 const Filters: React.FC<FiltersProps> = ({ searchParams }) => {
   return (
     <div className="sm:flex justify-between mb-4">
-      <Suspense>
-        <Search />
-      </Suspense>
+      <Search searchParams={searchParams} />
       <div className="flex items-center">
-        <Suspense>
-          <Select />
-        </Suspense>
-        <Suspense>
-          <SortButtons searchParams={searchParams} />
-        </Suspense>
+        <Select searchParams={searchParams} />
+        <SortButtons searchParams={searchParams} />
       </div>
     </div>
   );
