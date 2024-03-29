@@ -2,7 +2,8 @@ import React, { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { BeerList, BeerListLoading, Filters } from "@/components/organisms";
 import { correctSearchParams, removeInvalidKeys } from "@/lib/utils";
-import { SearchParams, searchParamsSchema } from "@/types";
+import { SearchParams } from "@/types";
+import { SearchParamsValidation } from "@/lib/validations";
 
 type HomePageProps = {
   searchParams: SearchParams;
@@ -13,7 +14,10 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const { correctedSearchParams: validSearchParams, hasInvalidKey } =
     removeInvalidKeys(correctedSearchParams);
 
-  if (hasInvalidKey || !searchParamsSchema.safeParse(searchParams).success) {
+  if (
+    hasInvalidKey ||
+    !SearchParamsValidation.safeParse(searchParams).success
+  ) {
     const params = Object.entries(validSearchParams)
       .map(([key, value]) => `${key}=${value}`)
       .join("&");

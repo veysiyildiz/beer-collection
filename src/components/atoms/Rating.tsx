@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { rateBeer } from "@/app/actions";
 import { Star } from "lucide-react";
 import { twMerge } from "tailwind-merge";
+import { rateBeer } from "@/app/actions";
 
 type RatingProps = {
   rating: number;

@@ -1,6 +1,7 @@
 import { getBeers } from "@/app/actions";
 import { DEFAULT_PAGE, DEFAULT_SORT_ORDER } from "@/lib/constants";
-import { SearchParams, searchParamsSchema } from "@/types";
+import { SearchParams } from "@/types";
+import { SearchParamsValidation } from "@/lib/validations";
 
 export const getSearchParams = (searchParams: SearchParams) => {
   const {
@@ -34,14 +35,14 @@ export async function fetchBeers(searchParams: SearchParams) {
 }
 
 export const correctSearchParams = (searchParams: SearchParams) => {
-  const result = searchParamsSchema.safeParse(searchParams);
+  const result = SearchParamsValidation.safeParse(searchParams);
   let correctedSearchParams = { ...searchParams };
 
   if (!result.success) {
     result.error.issues.forEach((issue) => {
       if (issue.path) {
-        const key = issue.path[0] as keyof typeof searchParamsSchema.shape;
-        const fieldSchema = searchParamsSchema.shape[key];
+        const key = issue.path[0] as keyof typeof SearchParamsValidation.shape;
+        const fieldSchema = SearchParamsValidation.shape[key];
         if (issue.code === "invalid_enum_value") {
           correctedSearchParams = {
             ...correctedSearchParams,
@@ -56,7 +57,7 @@ export const correctSearchParams = (searchParams: SearchParams) => {
 };
 
 export const removeInvalidKeys = (searchParams: SearchParams) => {
-  const validKeys = Object.keys(searchParamsSchema.shape);
+  const validKeys = Object.keys(SearchParamsValidation.shape);
   let hasInvalidKey = false;
 
   Object.keys(searchParams).forEach((key) => {

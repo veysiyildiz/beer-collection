@@ -2,32 +2,13 @@
 
 import React from "react";
 import { toast } from "react-hot-toast";
-import { addBeer } from "@/app/actions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { FormField } from "@/components/organisms";
-import { Beer } from "@/types";
 import { SubmitButton } from "@/components/molecules";
-
-const schema = z.object({
-  name: z.string().nonempty({ message: "Name is required" }),
-  tagline: z.string().nonempty({ message: "Tagline is required" }),
-  first_brewed: z.string().nonempty({ message: "First brewed is required" }),
-  description: z.string().nonempty({ message: "Description is required" }),
-  image_url: z.string().nonempty({ message: "Image URL is required" }),
-  abv: z
-    .string()
-    .transform((val) => parseFloat(val))
-    .refine((value) => value >= 0, {
-      message: "ABV must be a non-negative number",
-    }),
-  food_pairing: z.string().nonempty({ message: "Food pairing is required" }),
-  brewers_tips: z.string().nonempty({ message: "Brewers tips is required" }),
-  contributed_by: z
-    .string()
-    .nonempty({ message: "Contributed by is required" }),
-});
+import { FormField } from "@/components/organisms";
+import { addBeer } from "@/app/actions";
+import { Beer } from "@/types";
+import { BeerValidation } from "@/lib/validations";
 
 type FormType = Omit<Beer, "food_pairing"> & { food_pairing: string };
 
@@ -37,7 +18,7 @@ const BeerForm: React.FC = () => {
     setValue,
     formState: { errors },
   } = useForm<FormType>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(BeerValidation),
   });
 
   const defaultImageUrl = "https://picsum.photos/200/300";
@@ -53,7 +34,9 @@ const BeerForm: React.FC = () => {
       image_url: data.image_url.toString(),
       name: data.name.toString(),
       tagline: data.tagline.toString(),
-      food_pairing: data.food_pairing.toString().split("\n"),
+      food_pairing: (data.food_pairing && data.food_pairing.toString().trim()
+        ? data.food_pairing.toString().split("\n").filter(Boolean)
+        : ["No food pairing provided"]) as [string, ...string[]],
     };
 
     try {

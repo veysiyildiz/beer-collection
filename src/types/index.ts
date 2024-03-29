@@ -1,45 +1,22 @@
-import { z } from "zod";
-import { DEFAULT_PAGE, DEFAULT_SORT_ORDER } from "@/lib/constants";
+import * as z from "zod";
+import {
+  SearchParamsValidation,
+  BeerValidation,
+  CommentValidation,
+  RatingValidation,
+} from "@/lib/validations";
 
 export type Status = "loading" | "success" | "failed";
-
-export type Beer = {
-  _id?: string;
-  abv: number;
-  name: string;
-  tagline: string;
-  first_brewed: string;
-  description: string;
-  image_url: string;
-  food_pairing: string[];
-  brewers_tips: string;
-  contributed_by: string;
-  averageRating?: number;
-};
 
 export type BeerData = {
   total: number;
   beers: Beer[];
 };
 
-export type Comment = {
-  _id?: string;
-  beerId: string;
-  text: string;
-  date: string;
-};
+export type Beer = z.infer<typeof BeerValidation>;
 
-export type Rating = {
-  _id?: string;
-  beerId: string;
-  rating: string;
-};
+export type Comment = z.infer<typeof CommentValidation>;
 
-export const searchParamsSchema = z.object({
-  page: z.string().default(DEFAULT_PAGE),
-  searchTerm: z.string().default(""),
-  sortOption: z.enum(["", "abv", "first_brewed"]).default(""),
-  order: z.enum(["asc", "desc"]).default(DEFAULT_SORT_ORDER),
-});
+export type Rating = z.infer<typeof RatingValidation>;
 
-export type SearchParams = z.infer<typeof searchParamsSchema>;
+export type SearchParams = z.infer<typeof SearchParamsValidation>;

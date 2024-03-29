@@ -119,6 +119,12 @@ I used the following documents during coding:
             - `beer.model.ts`
             - `comment.model.ts`
             - `rating.model.ts`
+        - `validations`
+            - `beer.ts`
+            - `comment.ts`
+            - `index.ts`
+            - `rating.ts`
+            - `searchParams.ts`
         - `constants.ts`
         - `mongoose.ts`
         - `utils.ts`

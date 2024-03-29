@@ -51,7 +51,7 @@ const BeerDetail: React.FC<BeerDetailProps> = ({ beer }) => {
           Best Food Pairing
         </Text>
         <ul className="list-disc list-inside">
-          {beer?.food_pairing?.map((food, index) => (
+          {beer?.food_pairing?.map((food: string, index: number) => (
             <li key={index}>
               <Text variant="span">{food}</Text>
             </li>
