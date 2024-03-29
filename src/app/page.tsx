@@ -9,6 +9,9 @@ type HomePageProps = {
   searchParams: SearchParams;
 };
 
+type KeyParamsType = Omit<SearchParams, "page"> &
+  Partial<Pick<SearchParams, "page">>;
+
 export default async function HomePage({ searchParams }: HomePageProps) {
   let correctedSearchParams = correctSearchParams(searchParams);
   const { correctedSearchParams: validSearchParams, hasInvalidKey } =
@@ -25,10 +28,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     return null;
   }
 
+  const keyParams: KeyParamsType = { ...validSearchParams };
+  delete keyParams.page;
+
   return (
     <>
       <Filters searchParams={validSearchParams} />
-      <Suspense fallback={<BeerListLoading />}>
+      <Suspense key={JSON.stringify(keyParams)} fallback={<BeerListLoading />}>
         <BeerList searchParams={validSearchParams} />
       </Suspense>
     </>

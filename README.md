@@ -12,7 +12,7 @@ The beer details are now stored in a MongoDB database. I chose to use MongoDB to
 It's important to note that `disabling JavaScript` will prevent the application from transitioning out of the loading state, as `Suspense` relies on JavaScript to detect when the condition is met and render the actual content. To observe how the application behaves with JavaScript disabled on your local, you can comment out the Suspense component in the homepage and delete the loading.tsx file in the beer folder. Or see this deployment link [Disable JavaScript Link](https://beer-collection-fn92-9flckoc3j-veysiyildizs-projects.vercel.app/).
 
 ## Loading and Filtering States
-I have used `react-loading-skeleton` to show a loading state as a placeholder until the data is ready, and added 500ms delay to APIs to see the loading state. I also added filter states and search term to searchParams and validation via `zod` as a better practice for user experience. A user can share a search/filter result page url or bookmark it to see the same results in somewhere else.
+I have used `react-loading-skeleton` to show a loading state as a placeholder until the data is ready, and added delay to APIs to see the loading state. I also added filter states and search term to searchParams and validation via `zod` as a better practice for user experience. A user can share a search/filter result page url or bookmark it to see the same results in somewhere else.
 
 ## Forms
 The forms in the app using `react-hook-form` and `zod`. It's awesome for managing the form data and validation.

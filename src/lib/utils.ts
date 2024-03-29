@@ -18,7 +18,7 @@ export async function fetchBeers(searchParams: SearchParams) {
   const { page, searchTerm, sortOption, order } = getSearchParams(searchParams);
 
   try {
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     const response = await getBeers({
       page,
       searchTerm,
