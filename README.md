@@ -1,13 +1,13 @@
 # Beer Collection App Documentation
 
 ## Demo
-You can view a live demo of the Beer Collection App at [Demo Link](https://beer-collection-sigma.vercel.app/) But unfortunately the adding functionalities like add beer, add comment, and rate a beer is not working on vercel. It's because of all the files are read-only and the project uses the dB.json file as database. You can check that functionalities on your local development or production environment.
+You can view a live demo of the Beer Collection App at [Demo Link](https://beer-collection-sigma.vercel.app/).
 
 ## Introduction
-This is the Beer Collection App. It's built with NextJS ❤️, server-side rendering first . You can add beers to your collection. You can also give beers a rating and leave comments.
+This is the Beer Collection App. It's built with NextJS ❤️, server-side rendering first. You can add beers to your collection. You can also give beers a rating and leave comments.
 
 ## Data Source
-The beer details are kept in a file called `db.json` in the project's main folder. Instead of using an existing API, I chose to use this file to show how I handle backend tasks and use Next.js features like API Routes. I also added the ability to leave comments and ratings for the beers, to demonstrate how I work with data and create a database-like setup. I filled the `db.json` file by taking some information from the `https://api.punkapi.com/v2/beers` website and modifying it. I added delays to make it look like the app is loading, and I used both `Suspense` and `loading.tsx` to demonstrate different loading methods, even though it's not the best practice. Similarly, I included both API routes and actions to show different approaches, but in a real project, it might be better to stick with just one method for consistency.
+The beer details are now stored in a MongoDB database. I chose to use MongoDB to demonstrate fullstack Next.js features. I also added the ability to leave comments and ratings for the beers, to demonstrate how I work with data in a database setup. The initial data for the database was taken from the `https://api.punkapi.com/v2/beers` website and modified to fit the application's needs. I added delays to simulate real-world loading times, and I used both `Suspense` and `loading.tsx` to demonstrate different loading methods, even though it's not always the best practice. Similarly, I included both API routes and server actions to show different approaches, but in a real-world project, it might be better to consider project needs and/or stick with just one method for consistency.
 
 It's important to note that `disabling JavaScript` will prevent the application from transitioning out of the loading state, as `Suspense` relies on JavaScript to detect when the condition is met and render the actual content. To observe how the application behaves with JavaScript disabled, you can comment out the Suspense component in the homepage and delete the loading.tsx file in the beer folder.
 
@@ -28,9 +28,9 @@ I used the following documents during coding:
 - [React Hook Form](https://react-hook-form.com/get-started)
 - [Zod](https://zod.dev/)
 - [react-loading-skeleton on npm](https://www.npmjs.com/package/react-loading-skeleton)
+- [mongoose](https://mongoosejs.com/)
 
 ## App Structure
-- `db.json`
 - `public`
     - `default_beer.png`
     - `favicon.ico`
@@ -115,11 +115,16 @@ I used the following documents during coding:
     - `lib`
         - `hooks`
             - `useSearch.ts`
+        - `models`
+            - `beer.model.ts`
+            - `comment.model.ts`
+            - `rating.model.ts`
         - `constants.ts`
+        - `mongoose.ts`
         - `utils.ts`
 
 ## Installation
-To install and run the Beer Collection App, follow these steps:
+To install and run the Beer Collection App you will need `.env.local` file I will send it via e-mail, please follow these steps and after cloning project add .env file into project:
 
 1. Clone the repository:
     ```bash

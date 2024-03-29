@@ -2,7 +2,6 @@
 
 import { API_URL } from "@/lib/constants";
 import { Beer } from "@/types";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export default async function addBeer(beer: Beer) {
@@ -19,7 +18,7 @@ export default async function addBeer(beer: Beer) {
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
-    revalidatePath("/");
+
     data = await res.json();
   } catch (error) {
     if (error instanceof Error) {
@@ -28,6 +27,6 @@ export default async function addBeer(beer: Beer) {
       throw new Error("An unknown error occurred");
     }
   }
-  redirect(`/beer/${beer.id}`);
+  redirect(`/beer/${data._id}`);
   return { data };
 }

@@ -11,14 +11,16 @@ type BeerCardProps = {
 const BeerCard: React.FC<BeerCardProps> = React.memo(
   ({ beer }: BeerCardProps) => {
     return (
-      beer && (
-        <Link href={`/beer/${beer.id}`}>
+      beer &&
+      beer._id && (
+        <Link href={`/beer/${beer._id.toString()}`}>
           <div className="overflow-hidden flex flex-col items-center justify-between border p-4 rounded-md shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out h-96">
             <Image
               src={beer.image_url || "/default_beer.png"}
               alt={beer.name || "Beer"}
               width={120}
               height={200}
+              priority
               className="rounded-md w-auto h-48 object-scale-down data-[loaded=false]:bg-gray-100/10"
             />
             <Text
@@ -34,9 +36,10 @@ const BeerCard: React.FC<BeerCardProps> = React.memo(
               {beer.tagline}
             </Text>
             <Rating
+              key={beer._id}
               className="mt-4"
               rating={beer.averageRating || 0}
-              beerId={beer.id}
+              beerId={beer._id}
             />
           </div>
         </Link>

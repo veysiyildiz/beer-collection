@@ -16,7 +16,6 @@ const schema = z.object({
   first_brewed: z.string().nonempty({ message: "First brewed is required" }),
   description: z.string().nonempty({ message: "Description is required" }),
   image_url: z.string().nonempty({ message: "Image URL is required" }),
-  id: z.string().nonempty({ message: "ID is required" }),
   abv: z
     .string()
     .transform((val) => parseFloat(val))
@@ -51,12 +50,10 @@ const BeerForm: React.FC = () => {
       contributed_by: data.contributed_by.toString(),
       description: data.description.toString(),
       first_brewed: data.first_brewed.toString(),
-      id: data.id.toString(),
       image_url: data.image_url.toString(),
       name: data.name.toString(),
       tagline: data.tagline.toString(),
       food_pairing: data.food_pairing.toString().split("\n"),
-      averageRating: 0,
     };
 
     try {
@@ -71,7 +68,6 @@ const BeerForm: React.FC = () => {
 
   return (
     <form action={addBeerClientAction} className="w-full max-w-lg p-4 mx-auto">
-      <input type="hidden" {...register("id")} value={Date.now().toString()} />
       <input type="hidden" {...register("image_url")} value={defaultImageUrl} />
 
       <FormField

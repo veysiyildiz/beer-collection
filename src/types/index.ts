@@ -4,7 +4,7 @@ import { DEFAULT_PAGE, DEFAULT_SORT_ORDER } from "@/lib/constants";
 export type Status = "loading" | "success" | "failed";
 
 export type Beer = {
-  id: string;
+  _id?: string;
   abv: number;
   name: string;
   tagline: string;
@@ -23,13 +23,14 @@ export type BeerData = {
 };
 
 export type Comment = {
-  id?: string;
+  _id?: string;
   beerId: string;
   text: string;
+  date: string;
 };
 
 export type Rating = {
-  id?: string;
+  _id?: string;
   beerId: string;
   rating: string;
 };

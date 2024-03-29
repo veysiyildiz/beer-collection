@@ -1,8 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { API_URL } from "@/lib/constants";
 import { Comment } from "@/types";
-import { revalidatePath } from "next/cache";
 
 export default async function addComment(data: Comment) {
   try {

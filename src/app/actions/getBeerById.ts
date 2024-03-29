@@ -7,9 +7,7 @@ export default async function getBeerById(id: string) {
 
   try {
     const res = await fetch(`${API_URL}api/beers/${id}`);
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
+
     data = await res.json();
   } catch (error) {
     if (error instanceof Error) {

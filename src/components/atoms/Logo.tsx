@@ -1,23 +1,15 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
+import { Text } from "@/components/atoms";
 
 const Logo: React.FC = () => (
   <div className="w-auto flex">
     <Link href="/" aria-label="Home">
-      <Image
-        src="/impact-logo.png"
-        alt="Impact Logo"
-        width={164}
-        height={64}
-        data-loaded="false"
-        onLoad={(event) => {
-          event.currentTarget.setAttribute("data-loaded", "true");
-        }}
-        className="w-auto data-[loaded=false]:bg-gray-100/10"
-      />
+      <Text variant="h1" className="sm:text-3xl text-2xl font-bold">
+        BEER COLLECTION
+      </Text>
     </Link>
   </div>
 );

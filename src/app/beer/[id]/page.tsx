@@ -11,27 +11,35 @@ type Params = {
 };
 
 export default async function DetailPage({ params }: Params) {
-  if (!params.id) {
-    return <ErrorMessage message="Invalid beer id" />;
-  }
   await new Promise((resolve) => setTimeout(resolve, 500));
-  const [{ data: beer }, comments] = await Promise.all([
-    getBeerById(params.id),
-    getCommentsByBeerId(params.id),
-  ]);
+  try {
+    const [{ data: beer }, comments] = await Promise.all([
+      getBeerById(params.id),
+      getCommentsByBeerId(params.id),
+    ]);
 
-  return (
-    <div className="grid gap-4">
-      <BeerDetail beer={beer} />
-      <CommentsWrapper comments={comments.data || []} beerId={params.id} />
-    </div>
-  );
+    return (
+      <div className="grid gap-4">
+        <BeerDetail beer={beer} />
+        <CommentsWrapper comments={comments.data || []} beerId={params.id} />
+      </div>
+    );
+  } catch (error) {
+    return <ErrorMessage message="Beer Not Found" />;
+  }
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { data: beer } = await getBeerById(params.id);
-  return {
-    title: beer?.name,
-    description: beer?.tagline,
-  };
+  try {
+    const { data: beer } = await getBeerById(params.id);
+    return {
+      title: beer?.name,
+      description: beer?.tagline,
+    };
+  } catch (error) {
+    return {
+      title: "Beer Not Found",
+      description: "Beer Not Found",
+    };
+  }
 }

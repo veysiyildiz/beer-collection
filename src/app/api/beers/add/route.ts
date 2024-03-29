@@ -1,39 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+import mongoose from "mongoose";
+import { connectToDB } from "@/lib/mongoose";
+import BeerModel from "@/lib/models/beer.model";
 import { Beer } from "@/types";
-import fs from "fs/promises";
-import path from "path";
-
-type DBObject = {
-  beers: Beer[];
-};
-
-const dbPath = path.join(process.cwd(), "db.json");
-
-const readDB = async (): Promise<DBObject> => {
-  const dbContents = await fs.readFile(dbPath, "utf8");
-  return JSON.parse(dbContents);
-};
-
-const writeDB = async (dbObject: DBObject): Promise<void> => {
-  await fs.writeFile(dbPath, JSON.stringify(dbObject, null, 2));
-};
 
 export async function POST(
   request: NextRequest
 ): Promise<NextResponse<Beer | { message: string }>> {
   try {
-    const dbObject = await readDB();
-
+    await connectToDB();
     const data = await request.json();
-
-    const newBeer: Beer = {
+    const newBeer = new BeerModel({
+      _id: new mongoose.Types.ObjectId(),
       ...data,
-    };
+    });
 
-    dbObject.beers.push(newBeer);
-
-    await writeDB(dbObject);
-
+    await newBeer.save();
+    revalidatePath("/");
     return NextResponse.json(newBeer);
   } catch (error) {
     const errorMessage =

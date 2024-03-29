@@ -1,33 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
+import { connectToDB } from "@/lib/mongoose";
+import BeerModel from "@/lib/models/beer.model";
 import { Beer } from "@/types";
-import fs from "fs/promises";
-import path from "path";
-
-type DBObject = {
-  beers: Beer[];
-};
-
-const findBeer = (beers: Beer[], id: string): Beer | undefined => {
-  return beers.find((beer: Beer) => beer.id === id);
-};
 
 export async function GET(
   request: NextRequest,
   context: any
 ): Promise<NextResponse<Beer | { message: string }>> {
   try {
-    const dbPath = path.join(process.cwd(), "db.json");
-    const dbContents = await fs.readFile(dbPath, "utf8");
-
-    const { beers }: DBObject = JSON.parse(dbContents);
+    await connectToDB();
 
     const { params } = context;
-
-    const beer = findBeer(beers, params.id.toString());
-
-    if (!beer) {
-      return new NextResponse(null, { status: 404 });
-    }
+    const beer = await BeerModel.findOne({ _id: params.id.toString() });
 
     return NextResponse.json(beer);
   } catch (error) {

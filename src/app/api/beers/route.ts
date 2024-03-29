@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { connectToDB } from "@/lib/mongoose";
+import BeerModel from "@/lib/models/beer.model";
 import { Beer, BeerData } from "@/types";
-import fs from "fs/promises";
-import path from "path";
 import {
   DEFAULT_SORT_ORDER,
   DEFAULT_PAGE,
@@ -49,9 +49,9 @@ export async function GET(
   request: NextRequest
 ): Promise<NextResponse<BeerData | { message: string }>> {
   try {
-    const dbPath = path.join(process.cwd(), "db.json");
-    const dbContents = await fs.readFile(dbPath, "utf8");
-    let { beers }: { beers: Beer[] } = JSON.parse(dbContents);
+    await connectToDB();
+
+    let beers: Beer[] = await BeerModel.find();
 
     const url = new URL(request.url);
     const searchParams = new URLSearchParams(url.search);

@@ -41,7 +41,7 @@ const BeerListComponent: React.FC<{ beers: Beer[] }> = ({ beers }) => (
     {beers.length === 0 ? (
       <ErrorMessage message="No beers found" className="text-xl" />
     ) : (
-      beers.map((beer: Beer) => <BeerCard key={beer.id} beer={beer} />)
+      beers.map((beer: Beer) => <BeerCard key={beer._id} beer={beer} />)
     )}
   </div>
 );

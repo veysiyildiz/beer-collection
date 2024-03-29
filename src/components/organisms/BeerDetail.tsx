@@ -21,13 +21,14 @@ const BeerDetail: React.FC<BeerDetailProps> = ({ beer }) => {
           alt={beer?.name}
           width={300}
           height={450}
+          priority
           className="object-scale-down w-auto h-96 sm:h-[500px] m-auto"
         />
         <Rating
           className="mt-4"
           rating={beer?.averageRating || 0}
           clickable
-          beerId={beer?.id}
+          beerId={beer?._id as string}
         />
       </div>
       <div className="flex flex-col">

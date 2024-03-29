@@ -13,7 +13,7 @@ const Comments: React.FC<CommentsProps> = ({ comments }) => {
       <Text variant="h2">Comments</Text>
       {comments.map((comment) => (
         <div
-          key={comment?.id}
+          key={comment?._id}
           className="p-4 border-b-2 border-gray-200 rounded shadow my-2"
         >
           <Text variant="p" className="text-sm">
