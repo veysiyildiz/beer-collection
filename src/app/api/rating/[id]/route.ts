@@ -7,6 +7,7 @@ import BeerModel from "@/lib/models/beer.model";
 import { Rating, Beer } from "@/types";
 
 const calculateAverageRating = (ratings: Rating[]): number => {
+  if (ratings.length === 0) return 0;
   const totalRating = ratings.reduce(
     (total: number, rating: Rating) => total + Number(rating.rating),
     0
@@ -46,10 +47,11 @@ export async function POST(
     revalidatePath(`/`);
     revalidatePath(`/beer/${newRating.beerId}`);
 
+    const { beerId, rating } = newRating;
     return NextResponse.json({
-      beerId: newRating.beerId,
-      rating: newRating.rating,
-      beer: beer,
+      beerId,
+      rating,
+      beer,
     });
   } catch (error) {
     const errorMessage =

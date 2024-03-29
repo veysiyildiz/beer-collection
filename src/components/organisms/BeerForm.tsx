@@ -15,7 +15,6 @@ type FormType = Omit<Beer, "food_pairing"> & { food_pairing: string };
 const BeerForm: React.FC = () => {
   const {
     register,
-    setValue,
     formState: { errors },
   } = useForm<FormType>({
     resolver: zodResolver(BeerValidation),
