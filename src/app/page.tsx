@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { redirect } from "next/navigation";
 import { BeerList, BeerListLoading, Filters } from "@/components/organisms";
 import { correctSearchParams, removeInvalidKeys } from "@/lib/utils";
@@ -24,9 +24,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   return (
     <>
       <Filters searchParams={validSearchParams} />
-      <Suspense fallback={<BeerListLoading />}>
-        <BeerList searchParams={validSearchParams} />
-      </Suspense>
+      <BeerList searchParams={validSearchParams} />
     </>
   );
 }

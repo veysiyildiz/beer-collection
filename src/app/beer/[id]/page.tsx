@@ -11,7 +11,6 @@ type Params = {
 };
 
 export default async function DetailPage({ params }: Params) {
-  await new Promise((resolve) => setTimeout(resolve, 500));
   try {
     const [{ data: beer }, comments] = await Promise.all([
       getBeerById(params.id),
