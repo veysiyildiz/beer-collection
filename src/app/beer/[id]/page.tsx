@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ErrorMessage } from "@/components/atoms";
 import { BeerDetail, CommentsWrapper } from "@/components/organisms";
-import { getBeerById, getCommentsByBeerId } from "@/app/actions";
+import { getBeerById, getCommentsByBeerId, getAllBeers } from "@/app/actions";
 import { Beer } from "@/types";
 
 type Params = {
@@ -11,7 +11,6 @@ type Params = {
 };
 
 export default async function DetailPage({ params }: Params) {
-  await new Promise((resolve) => setTimeout(resolve, 300));
   try {
     const [{ data: beer }, comments] = await Promise.all([
       getBeerById(params.id),
@@ -42,4 +41,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description: "Beer Not Found",
     };
   }
+}
+
+export async function generateStaticParams() {
+  const beers = await getAllBeers();
+
+  return beers?.data.map((beer: Beer) => ({
+    id: beer._id?.toString(),
+  }));
 }

@@ -6,7 +6,6 @@ import BeerList from "./BeerList";
 import BeerListLoading from "./BeerListLoading";
 import Filters from "./Filters";
 import BeerDetail from "./BeerDetail";
-import BeerDetailSkeleton from "./BeerDetailSkeleton";
 import CommentForm from "./CommentForm";
 import CommentsWrapper from "./CommentsWrapper";
 import LoadMoreButton from "./LoadMoreButton";
@@ -21,7 +20,6 @@ export {
   BeerListLoading,
   Filters,
   BeerDetail,
-  BeerDetailSkeleton,
   CommentForm,
   CommentsWrapper,
   LoadMoreButton,

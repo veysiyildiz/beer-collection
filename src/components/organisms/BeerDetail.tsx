@@ -19,8 +19,8 @@ const BeerDetail: React.FC<BeerDetailProps> = ({ beer }) => {
         <Image
           src={beer?.image_url}
           alt={beer?.name}
-          width={300}
-          height={450}
+          width={380}
+          height={760}
           priority
           className="object-scale-down w-auto h-96 sm:h-[500px] m-auto"
         />

@@ -7,7 +7,9 @@ You can view a live demo of the Beer Collection App at [Demo Link](https://beer-
 This is the Beer Collection App. It's built with NextJS ❤️, server-side rendering first. You can add beers to your collection. You can also give beers a rating and leave comments.
 
 ## Data Source
-The beer details are now stored in a MongoDB database. I chose to use MongoDB to demonstrate fullstack Next.js features. I also added the ability to leave comments and ratings for the beers, to demonstrate how I work with data in a database setup. The initial data for the database was taken from the `https://api.punkapi.com/v2/beers` website and modified to fit the application's needs. I added delays to simulate real-world loading times, and I used both `Suspense` and `loading.tsx` to demonstrate different loading methods, even though it's not always the best practice. Similarly, I included both API routes and server actions to show different approaches, but in a real-world project, it might be better to consider project needs and/or stick with just one method for consistency.
+The beer details are now stored in a MongoDB database. I chose to use MongoDB to demonstrate fullstack Next.js features. I also added the ability to leave comments and ratings for the beers, to demonstrate how I work with data in a database setup. The initial data for the database was taken from the `https://api.punkapi.com/v2/beers` website and modified to fit the application's needs. I added delay to simulate real-world loading times, and I used `Suspense` for listing beers. I included both API routes and server actions to show different approaches, but in a real-world project, it might be better to consider project needs and/or stick with just one method for consistency.
+
+Since beer detail pages are server side generated (SSG) pages, building app in local will require `NEXT_PUBLIC_API_BASE_URL=https://beer-collection-sigma.vercel.app/` in .env file. See Installation instructions.
 
 It's important to note that `disabling JavaScript` will prevent the application from transitioning out of the loading state, as `Suspense` relies on JavaScript to detect when the condition is met and render the actual content. To observe how the application behaves with JavaScript disabled on your local, you can comment out the Suspense component in the homepage and delete the loading.tsx file in the beer folder. Or see this deployment link [Disable JavaScript Link](https://beer-collection-fn92-9flckoc3j-veysiyildizs-projects.vercel.app/).
 
@@ -15,7 +17,7 @@ It's important to note that `disabling JavaScript` will prevent the application 
 I have used `react-loading-skeleton` to show a loading state as a placeholder until the data is ready, and added delay to APIs to see the loading state. I also added filter states and search term to searchParams and validation via `zod` as a better practice for user experience. A user can share a search/filter result page url or bookmark it to see the same results in somewhere else.
 
 ## Forms
-The forms in the app using `react-hook-form` and `zod`. It's awesome for managing the form data and validation.
+The forms in the app using `react-hook-form` and `zod`. It's awesome for managing the form data and validations.
 
 ## Components
 I have created the components following atomic design principles which is great for reusability and maintainability also used tailwind for styling. All components were created by me with love. ☺️
@@ -34,7 +36,6 @@ I used the following documents during coding:
 - `public`
     - `default_beer.png`
     - `favicon.ico`
-    - `impact-logo.png`
     - `icon512_maskable.png`
     - `icon512_rounded.png`
     - `manifest.json`
@@ -66,7 +67,6 @@ I used the following documents during coding:
                     - `route.ts`
         - `beer`
             - `[[id]]`
-                - `loading.tsx`
                 - `page.tsx`
         - `favicon.ico`
         - `globals.css`
@@ -97,7 +97,6 @@ I used the following documents during coding:
             - `index.tsx`
         - `organisms`
             - `BeerDetail.tsx`
-            - `BeerDetailSkeleton.tsx`
             - `BeerForm.tsx`
             - `BeerList.tsx`
             - `BeerListLoading.tsx`
@@ -130,7 +129,7 @@ I used the following documents during coding:
         - `utils.ts`
 
 ## Installation
-To install and run the Beer Collection App you will need `.env.local` file I will send it via e-mail, please follow these steps and after cloning project add .env file into project:
+To install and run the Beer Collection App you will need `.env.local` file, please follow these steps and rename `env.local.sample` file to `.env.local` after cloning project:
 
 1. Clone the repository:
     ```bash

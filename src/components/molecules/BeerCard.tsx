@@ -18,7 +18,7 @@ const BeerCard: React.FC<BeerCardProps> = React.memo(
             <Image
               src={beer.image_url || "/default_beer.png"}
               alt={beer.name || "Beer"}
-              width={120}
+              width={100}
               height={200}
               priority
               className="rounded-md w-auto h-48 object-scale-down data-[loaded=false]:bg-gray-100/10"
