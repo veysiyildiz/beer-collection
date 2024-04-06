@@ -11,7 +11,7 @@ The beer details are now stored in a MongoDB database. I chose to use MongoDB to
 
 Since beer detail pages are server side generated (SSG) pages, building app in local will require `NEXT_PUBLIC_API_BASE_URL=https://beer-collection-sigma.vercel.app/` in .env file. See Installation instructions.
 
-It's important to note that `disabling JavaScript` will prevent the application from transitioning out of the loading state, as `Suspense` relies on JavaScript to detect when the condition is met and render the actual content. To observe how the application behaves with JavaScript disabled on your local, you can comment out the Suspense component in the homepage and delete the loading.tsx file in the beer folder. Or see this deployment link [Disable JavaScript Link](https://beer-collection-fn92-9flckoc3j-veysiyildizs-projects.vercel.app/).
+It's important to note that `disabling JavaScript` will prevent the application from transitioning out of the loading state, as `Suspense` relies on JavaScript to detect when the condition is met and render the actual content. To observe how the application behaves with JavaScript disabled on your local, you can comment out the Suspense component in the homepage.
 
 ## Loading and Filtering States
 I have used `react-loading-skeleton` to show a loading state as a placeholder until the data is ready, and added delay to APIs to see the loading state. I also added filter states and search term to searchParams and validation via `zod` as a better practice for user experience. A user can share a search/filter result page url or bookmark it to see the same results in somewhere else.
